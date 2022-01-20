@@ -105,8 +105,9 @@
   background-color: #fed700;
 }
 .header_catalog {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
+  position: relative;
 }
 .header_input {
   border: none;
@@ -131,7 +132,7 @@
   cursor: pointer;
 }
 .search:hover {
-  box-shadow: 0 4px 11px rgb(51 62 72 / 35%);
+  box-shadow: 4px 4px 11px rgb(51 62 72 / 35%);
 }
 .header_bottom_button {
   margin-left: 40px;

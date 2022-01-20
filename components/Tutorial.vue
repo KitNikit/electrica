@@ -1,9 +1,52 @@
 <template>
   <body>
+    <div class="catalog_block">
+      <div class="catalog_button">Диодная лента</div>
+      <div class="catalog_button">Розетки и выключатели</div>
+      <div class="catalog_button">Светильники и прожекторы</div>
+      <div class="catalog_button">Автоматы, УЗО, рубильники</div>
+      <div class="catalog_button">Лампочки</div>
+      <div class="catalog_button">Вентиляция</div>
+      <div class="catalog_button">Тёплый пол</div>
+      <div class="catalog_button">Умный дом</div>
+    </div>
     <div class="img">
-      <img
-        src="https://remontprovodki.ru/wp-content/uploads/2017/12/%D1%81%D0%BA%D0%BB%D0%B0%D0%B4-1024x455.jpg"
-      />
+      <img src="../static/img/bg.jpg" />
+    </div>
+    <div class="categories_container">
+      <div class="categories_title">Популярные категории</div>
+      <div class="categories_items">
+        <div class="categories_item">
+          <div class="cat_item_title">Кабель-провод</div>
+          <div class="cat_item_img">
+            <img src="../static/img/1.png" />
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">Тёплый пол</div>
+          <div class="cat_item_img">
+            <img src="../static/img/2.png" />
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">Вентиляция</div>
+          <div class="cat_item_img">
+            <img src="../static/img/3.png" />
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">Умный дом</div>
+          <div class="cat_item_img">
+            <img src="../static/img/4.png" />
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">Автоматы, УЗО, рубильники</div>
+          <div class="cat_item_img">
+            <img src="../static/img/5.png" />
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </template>
@@ -15,5 +58,94 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.catalog_block {
+  position: absolute;
+  left: 360px;
+  top: 215px;
+  background-color: #fff;
+  border-bottom-right-radius: 0.4375rem;
+  border-bottom-left-radius: 0.4375rem;
+  z-index: 1000;
+  width: 350px;
+  border: 1px solid #fed700;
+}
+.catalog_button {
+  height: 50px;
+  border-bottom: 1px solid #fed700;
+  margin: 1px 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+.catalog_button:hover {
+  background-color: #f5f5f5;
+  padding-left: 5px;
+}
+
+.categories_container {
+  margin: 50px 200px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+.categories_item {
+  display: flex;
+  border: 1px solid inherit;
+  border-right: 1px solid #fed700;
+  border-radius: 5px;
+  flex: 1;
+  margin: 25px 0;
+  flex-direction: column;
+}
+.categories_items {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.categories_title {
+  font-size: 26px;
+  margin: 10px 0;
+  border-bottom: 1px solid #dddddd;
+}
+.categories_title::before {
+  content: "";
+  width: 275px;
+  height: 40px;
+  border-bottom: 4px solid #fed700;
+  position: absolute;
+}
+.cat_item_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0062bd;
+  align-self: center;
+  margin: 10px 0;
+}
+.cat_item_img {
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  padding: 20px 0;
+}
+.cat_item_img img {
+  object-fit: cover;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.categories_item:hover {
+  border-color: #dddddd;
+  box-shadow: 5px 5px 10px #c6c6c6;
+}
+.categories_item:hover .cat_item_title {
+  color: gold;
+}
+.catalog_button:nth-last-child(1),
+.categories_item:nth-last-child(1) {
+  border: none;
 }
 </style>
