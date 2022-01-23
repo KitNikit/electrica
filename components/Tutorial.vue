@@ -48,6 +48,117 @@
         </div>
       </div>
     </div>
+    <div class="catalog_block">
+      <div class="catalog_button">Диодная лента</div>
+      <div class="catalog_button">Розетки и выключатели</div>
+      <div class="catalog_button">Светильники и прожекторы</div>
+      <div class="catalog_button">Автоматы, УЗО, рубильники</div>
+      <div class="catalog_button">Лампочки</div>
+      <div class="catalog_button">Вентиляция</div>
+      <div class="catalog_button">Тёплый пол</div>
+      <div class="catalog_button">Умный дом</div>
+    </div>
+    <div class="categories_container">
+      <div class="categories_title">Товары недели</div>
+      <div class="categories_items">
+        <div class="categories_item">
+          <div class="cat_item_title">
+            Кабель силовой алюминиевый бронированный 4х16 мм
+          </div>
+          <div class="cat_item_img">
+            <img src="../static/img/11.png" />
+          </div>
+          <div class="cat_item_price">
+            <div class="price_number">222,30 ₽</div>
+            <div class="price_basket">
+              <b-icon icon="cart3" scale="0.9"></b-icon>
+            </div>
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">
+            Таймер розеточный, 7-дневная программа 16 А TDM
+          </div>
+          <div class="cat_item_img">
+            <img src="../static/img/12.png" />
+          </div>
+          <div class="cat_item_price">
+            <div class="price_number">779,00 ₽</div>
+            <div class="price_basket">
+              <b-icon icon="cart3" scale="0.9"></b-icon>
+            </div>
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">Реле контроля напряжения RBUZ D63t</div>
+          <div class="cat_item_img">
+            <img src="../static/img/13.png" />
+          </div>
+          <div class="cat_item_price">
+            <div class="price_number">3705,00 ₽</div>
+            <div class="price_basket">
+              <b-icon icon="cart3" scale="0.9"></b-icon>
+            </div>
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">
+            Лампа LED "груша" Е27 11Вт (990Лм) 4000К 230В IEK ECO
+          </div>
+          <div class="cat_item_img">
+            <img src="../static/img/14.png" />
+          </div>
+          <div class="cat_item_price">
+            <div class="price_number">84,55 ₽</div>
+            <div class="price_basket">
+              <b-icon icon="cart3" scale="0.9"></b-icon>
+            </div>
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">
+            Реле контроля напряжения АЗМ LED-63А-220В TDM
+          </div>
+          <div class="cat_item_img">
+            <img src="../static/img/15.png" />
+          </div>
+          <div class="cat_item_price">
+            <div class="price_number">1681,50 ₽</div>
+            <div class="price_basket">
+              <b-icon icon="cart3" scale="0.9"></b-icon>
+            </div>
+          </div>
+        </div>
+        <div class="categories_item">
+          <div class="cat_item_title">
+            Розетка 2P+E, 16А, белый ATLAS DESIGN
+          </div>
+          <div class="cat_item_img">
+            <img src="../static/img/16.png" />
+          </div>
+          <div class="cat_item_price">
+            <div class="price_number">137,75 ₽</div>
+            <div class="price_basket">
+              <b-icon icon="cart3" scale="0.9"></b-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="partner_container">
+      <div class="categories_title">Бренды</div>
+      <div class="partner_items">
+        <div class="partner_item"><img src="../static/img/abb.png" /></div>
+        <div class="partner_item"><img src="../static/img/dkc.png" /></div>
+        <div class="partner_item"><img src="../static/img/ekf.png" /></div>
+        <div class="partner_item">
+          <img src="../static/img/hyperline.png" />
+        </div>
+        <div class="partner_item"><img src="../static/img/iek.png" /></div>
+        <div class="partner_item"><img src="../static/img/legrand.png" /></div>
+        <div class="partner_item"><img src="../static/img/philips.png" /></div>
+      </div>
+    </div>
   </body>
 </template>
 <style scoped>
@@ -88,7 +199,7 @@
 
 .categories_container {
   margin: 50px 200px;
-  height: 350px;
+  /* height: 350px; */
   display: flex;
   flex-direction: column;
 }
@@ -123,7 +234,7 @@
   font-weight: 700;
   color: #0062bd;
   align-self: center;
-  margin: 10px 0;
+  margin: 10px;
 }
 .cat_item_img {
   height: 100%;
@@ -147,5 +258,49 @@
 .catalog_button:nth-last-child(1),
 .categories_item:nth-last-child(1) {
   border: none;
+}
+.cat_item_price {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ee0000;
+  margin: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+}
+.price_basket {
+  background: #fed700;
+  border-radius: 50%;
+  width: 40px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.price_basket:hover {
+  box-shadow: 0 4px 11px rgb(254 215 0 / 35%);
+  cursor: pointer;
+  color: #334141;
+  transform: translateY(-3px);
+  transition: all 0.2s ease-in-out;
+}
+.partner_container {
+  margin: 50px 200px;
+  height: 200px;
+}
+.partner_items {
+  display: flex;
+  height: 100px;
+  margin-top: 40px;
+}
+.partner_item {
+  width: 230px;
+  margin: 0 10px;
+  background: #f6f6f6;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.partner_item img {
+  height: 100%;
 }
 </style>

@@ -4,9 +4,16 @@
       <header-top class="header_top w-100">
         <div class="header_title">Welcome to Electronics Store</div>
         <div class="header_button">
-          <NuxtLink to="/tel">Позвонить нам</NuxtLink>
-          <NuxtLink to="/mail">Написать нам</NuxtLink>
-          <NuxtLink to="/map">Открыть карту</NuxtLink>
+          <NuxtLink to="/tel"
+            >Позвонить нам <b-icon icon="telephone" aria-hidden="true"></b-icon
+          ></NuxtLink>
+          <NuxtLink to="/mail"
+            >Написать нам
+            <b-icon icon="envelope-open" aria-hidden="true"></b-icon
+          ></NuxtLink>
+          <NuxtLink to="/map"
+            >Открыть карту<b-icon icon="geo-alt" aria-hidden="true"></b-icon
+          ></NuxtLink>
         </div>
       </header-top>
       <header-center class="header_center w-100">
@@ -28,14 +35,77 @@
       <header-bottom class="header_bottom w-100">
         <div class="header_catalog">Каталог товаров</div>
         <input placeholder="Введите название товара" class="header_input" />
-        <div class="search"></div>
-        <div class="header_bottom_button">Избранное</div>
-        <div class="header_bottom_button">Корзина</div>
+        <div class="search">
+          <b-icon
+            stacked
+            icon="search"
+            variant="white"
+            scale="0.5"
+            shift-v="2"
+          ></b-icon>
+        </div>
+        <div class="header_bottom_button">
+          <b-icon icon="suit-heart" aria-hidden="true"></b-icon> Избранное
+        </div>
+        <div class="header_bottom_button">
+          <b-icon icon="cart3" aria-hidden="true"></b-icon> Корзина
+        </div>
       </header-bottom>
     </header>
     <Nuxt />
     <footer>
-      <footer-top class="footer_top"></footer-top>
+      <footer-top class="footer_top w-100">
+        <div class="footer_top_title">
+          <b-icon icon="lightning" aria-hidden="true"></b-icon> Следите за
+          нашими новинками в социальных сетях
+        </div>
+        <input placeholder="Введите название товара" class="footer_input" />
+        <div class="search">
+          <b-icon
+            stacked
+            icon="search"
+            variant="white"
+            scale="0.5"
+            shift-v="2"
+          ></b-icon>
+        </div>
+      </footer-top>
+      <footer-center class="footer_center w-100">
+        <div class="footer_container">
+          <div class="footer_phone">
+            <h3>
+              <b-icon
+                icon="headphones"
+                scale="1.5"
+                aria-hidden="true"
+                variant="warning"
+              ></b-icon>
+              Телефон для связи
+            </h3>
+            <a href="tel:89100000000">8 (910) 000 00 00</a>
+          </div>
+          <div class="footer_social">
+            <div class="social_btn">
+              <b-icon icon="instagram" scale="1.5"></b-icon>
+            </div>
+            <div class="social_btn">
+              <b-icon icon="facebook" scale="1.5"></b-icon>
+            </div>
+            <div class="social_btn">
+              <b-icon icon="twitter" scale="1.5"></b-icon>
+            </div>
+            <div class="social_btn">
+              <b-icon icon="youtube" scale="1.5"></b-icon>
+            </div>
+            <div class="social_btn">
+              <b-icon icon="google" scale="1.5"></b-icon>
+            </div>
+            <div class="social_btn">
+              <b-icon icon="twitch" scale="1.5"></b-icon>
+            </div>
+          </div>
+        </div>
+      </footer-center>
     </footer>
   </div>
 </template>
@@ -43,14 +113,18 @@
 <style scoped>
 * {
   font-family: "Roboto", sans-serif;
+}
+body {
   color: #333e48;
+}
+.nuxt-link-active {
+  font-weight: bold;
+  color: #df3737;
 }
 .header_title {
   margin-left: 400px;
 }
-.nuxt-link-active {
-  font-weight: bold;
-}
+
 .header_button {
   margin-right: 200px;
   margin-left: auto;
@@ -95,9 +169,11 @@
   font-size: 20px;
   font-weight: bold;
   margin: 0 30px;
-  color: #333e48;
+  /* color: #333e48; */
 }
-.header_bottom {
+
+.header_bottom,
+.footer_top {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,6 +212,57 @@
 }
 .header_bottom_button {
   margin-left: 40px;
+}
+.footer_top_title {
+  font-size: 24px;
+}
+.footer_input {
+  border: none;
+  margin-left: 50px;
+  width: 400px;
+  border-radius: 50px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 41px;
+  padding-left: 10px;
+  font-size: 20px;
+  outline: none;
+}
+.footer_center {
+  height: 300px;
+  display: block;
+}
+.footer_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin-left: 30%;
+}
+.footer_phone a {
+  font-size: 26px;
+  font-weight: bold;
+}
+.social_btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333e48;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-right: 10px;
+}
+.footer_social {
+  display: flex;
+  margin-top: 20px;
+}
+.social_btn:hover {
+  background: #333e48;
+  color: white;
 }
 </style>
 <script>
