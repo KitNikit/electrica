@@ -33,6 +33,9 @@
         </div>
       </header-center>
       <header-bottom class="header_bottom w-100">
+        <div class="burger_menu" v-on:click="toggleMenu">
+          <img src="../static/img/menu.png" />
+        </div>
         <div class="header_catalog">Каталог товаров</div>
         <input placeholder="Введите название товара" class="header_input" />
         <div class="search">
@@ -45,10 +48,11 @@
           ></b-icon>
         </div>
         <div class="header_bottom_button">
-          <b-icon icon="suit-heart" aria-hidden="true"></b-icon> Избранное
+          <b-icon icon="suit-heart" aria-hidden="true"></b-icon>
+          <span>Избранное</span>
         </div>
         <div class="header_bottom_button">
-          <b-icon icon="cart3" aria-hidden="true"></b-icon> Корзина
+          <b-icon icon="cart3" aria-hidden="true"></b-icon> <span>Корзина</span>
         </div>
       </header-bottom>
     </header>
@@ -264,7 +268,52 @@ body {
   background: #333e48;
   color: white;
 }
+.burger_menu {
+  display: none;
+}
+@media (max-width: 1200px) {
+  .header_top,
+  .header_catalog,
+  .header_center,
+  .header_bottom input,
+  .header_bottom .search,
+  .header_bottom_button span,
+  .footer_top_title {
+    display: none;
+  }
+  .header_bottom_button {
+    font-size: 24px;
+  }
+  .burger_menu {
+    display: block;
+    height: 40px;
+    width: 40px;
+    margin-right: 200px;
+    cursor: pointer;
+  }
+  .burger_menu img {
+    width: 100%;
+    height: 100%;
+  }
+  .footer_input {
+    margin-left: 0;
+    width: 300px;
+  }
+  .footer_container {
+    margin: 0;
+    align-items: center;
+  }
+}
 </style>
 <script>
-export default {};
+export default {
+  // mounted() {
+  // },
+  methods: {
+    toggleMenu: function () {
+      let element = document.querySelector(".catalog_block");
+      element.classList.toggle("active");
+    },
+  },
+};
 </script>

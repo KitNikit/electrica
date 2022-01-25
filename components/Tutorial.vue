@@ -9,6 +9,9 @@
       <div class="catalog_button">Вентиляция</div>
       <div class="catalog_button">Тёплый пол</div>
       <div class="catalog_button">Умный дом</div>
+      <div class="del_menu" v-on:click="toggleMenu">
+        <img src="../static/img/del.png" />
+      </div>
     </div>
     <div class="img">
       <img src="../static/img/bg.jpg" />
@@ -47,16 +50,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="catalog_block">
-      <div class="catalog_button">Диодная лента</div>
-      <div class="catalog_button">Розетки и выключатели</div>
-      <div class="catalog_button">Светильники и прожекторы</div>
-      <div class="catalog_button">Автоматы, УЗО, рубильники</div>
-      <div class="catalog_button">Лампочки</div>
-      <div class="catalog_button">Вентиляция</div>
-      <div class="catalog_button">Тёплый пол</div>
-      <div class="catalog_button">Умный дом</div>
     </div>
     <div class="categories_container">
       <div class="categories_title">Товары недели</div>
@@ -205,7 +198,6 @@
 }
 .categories_item {
   display: flex;
-  border: 1px solid inherit;
   border-right: 1px solid #fed700;
   border-radius: 5px;
   flex: 1;
@@ -303,4 +295,68 @@
 .partner_item img {
   height: 100%;
 }
+.del_menu {
+  display: none;
+}
+@media (max-width: 1200px) {
+  .catalog_block {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    position: fixed;
+  }
+  .catalog_block.active {
+    left: 0;
+  }
+  .catalog_button {
+    margin: 1px 70px;
+  }
+  .del_menu {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .del_menu img {
+    height: 100%;
+    width: 100%;
+  }
+  .img {
+    height: 400px;
+  }
+  .categories_container,
+  .partner_container {
+    margin: 10px;
+    height: 100%;
+  }
+  .categories_items {
+    flex-direction: column;
+  }
+  .partner_items {
+    flex-wrap: wrap;
+    height: 100%;
+  }
+  .partner_item {
+    width: 45%;
+    margin: 10px;
+  }
+  .partner_item img {
+    width: 100%;
+  }
+}
 </style>
+<script>
+export default {
+  // mounted() {
+  // },
+  methods: {
+    toggleMenu: function () {
+      let element = document.querySelector(".catalog_block");
+      element.classList.toggle("active");
+    },
+  },
+};
+</script>
