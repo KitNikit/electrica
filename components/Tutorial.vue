@@ -340,7 +340,7 @@
     height: 100%;
   }
   .partner_item {
-    width: 45%;
+    width: 44%;
     margin: 10px;
   }
   .partner_item img {
