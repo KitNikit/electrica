@@ -33,9 +33,6 @@
         </div>
       </header-center>
       <header-bottom class="header_bottom w-100">
-        <div class="burger_menu" v-on:click="toggleMenu">
-          <img src="../static/img/menu.png" />
-        </div>
         <div class="header_catalog">Каталог товаров</div>
         <input placeholder="Введите название товара" class="header_input" />
         <div class="search">
@@ -54,6 +51,7 @@
         <div class="header_bottom_button">
           <b-icon icon="cart3" aria-hidden="true"></b-icon> <span>Корзина</span>
         </div>
+        <div class="burger_menu" v-on:click="toggleMenu"></div>
       </header-bottom>
     </header>
     <Nuxt />
@@ -278,8 +276,12 @@ body {
   .header_bottom input,
   .header_bottom .search,
   .header_bottom_button span,
-  .footer_top_title {
+  .footer_top_title
+  /* .burger_menu.active .open_menu */ {
     display: none;
+  }
+  .header_bottom {
+    justify-content: start;
   }
   .header_bottom_button {
     font-size: 24px;
@@ -288,12 +290,16 @@ body {
     display: block;
     height: 40px;
     width: 40px;
-    margin-right: 200px;
+    margin-left: 240px;
     cursor: pointer;
+    z-index: 2;
+    transition: all 0.2s ease-out;
+    background: center / contain no-repeat url("../static/img/menu.png");
   }
-  .burger_menu img {
-    width: 100%;
-    height: 100%;
+  .burger_menu.active {
+    position: fixed;
+    right: 18px;
+    background: center / contain no-repeat url("../static/img/del.png");
   }
   .footer_input {
     margin-left: 0;
@@ -312,7 +318,9 @@ export default {
   methods: {
     toggleMenu: function () {
       let element = document.querySelector(".catalog_block");
+      let burger = document.querySelector(".burger_menu");
       element.classList.toggle("active");
+      burger.classList.toggle("active");
     },
   },
 };

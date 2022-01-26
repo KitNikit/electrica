@@ -9,9 +9,6 @@
       <div class="catalog_button">Вентиляция</div>
       <div class="catalog_button">Тёплый пол</div>
       <div class="catalog_button">Умный дом</div>
-      <div class="del_menu" v-on:click="toggleMenu">
-        <img src="../static/img/del.png" />
-      </div>
     </div>
     <div class="img">
       <img src="../static/img/bg.jpg" />
@@ -52,7 +49,7 @@
       </div>
     </div>
     <div class="categories_container">
-      <div class="categories_title">Товары недели</div>
+      <div class="categories_title two">Товары недели</div>
       <div class="categories_items">
         <div class="categories_item">
           <div class="cat_item_title">
@@ -139,7 +136,7 @@
       </div>
     </div>
     <div class="partner_container">
-      <div class="categories_title">Бренды</div>
+      <div class="categories_title three">Бренды</div>
       <div class="partner_items">
         <div class="partner_item"><img src="../static/img/abb.png" /></div>
         <div class="partner_item"><img src="../static/img/dkc.png" /></div>
@@ -170,9 +167,10 @@
   background-color: #fff;
   border-bottom-right-radius: 0.4375rem;
   border-bottom-left-radius: 0.4375rem;
-  z-index: 1000;
+  z-index: 1;
   width: 350px;
   border: 1px solid #fed700;
+  transition: all 0.4s ease-out;
 }
 .catalog_button {
   height: 50px;
@@ -220,6 +218,12 @@
   height: 40px;
   border-bottom: 4px solid #fed700;
   position: absolute;
+}
+.categories_title.two::before {
+  width: 182px;
+}
+.categories_title.three::before {
+  width: 92px;
 }
 .cat_item_title {
   font-size: 18px;
@@ -295,34 +299,18 @@
 .partner_item img {
   height: 100%;
 }
-.del_menu {
-  display: none;
-}
 @media (max-width: 1200px) {
   .catalog_block {
-    top: 0;
-    left: -100%;
+    top: -100%;
+    left: 0;
     width: 100%;
     position: fixed;
   }
   .catalog_block.active {
-    left: 0;
+    top: 0;
   }
   .catalog_button {
     margin: 1px 70px;
-  }
-  .del_menu {
-    display: block;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-  }
-  .del_menu img {
-    height: 100%;
-    width: 100%;
   }
   .img {
     height: 400px;
@@ -334,6 +322,9 @@
   }
   .categories_items {
     flex-direction: column;
+  }
+  .categories_item {
+    border: 1px solid #fed700;
   }
   .partner_items {
     flex-wrap: wrap;
