@@ -290,7 +290,8 @@ body {
     display: block;
     height: 40px;
     width: 40px;
-    margin-left: 240px;
+    position: absolute;
+    right: 15px;
     cursor: pointer;
     z-index: 2;
     transition: all 0.2s ease-out;
@@ -298,7 +299,7 @@ body {
   }
   .burger_menu.active {
     position: fixed;
-    right: 18px;
+    right: 15px;
     background: center / contain no-repeat url("../static/img/del.png");
   }
   .footer_input {
