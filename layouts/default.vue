@@ -36,8 +36,13 @@
         <div class="header_catalog">
           <NuxtLink to="/catalog">Каталог товаров</NuxtLink>
         </div>
-        <input placeholder="Введите название товара" class="header_input" />
-        <div class="search">
+        <input
+          v-model="searchValue"
+          placeholder="Введите название товара"
+          class="header_input"
+          v-on:keyup.enter="search(searchValue)"
+        />
+        <div class="search" @click="search(searchValue)">
           <b-icon
             stacked
             icon="search"
@@ -54,7 +59,9 @@
           <div class="header_bottom_button">
             <b-icon icon="cart3" aria-hidden="true"></b-icon>
             <span
-              >Корзина<span v-if="CART.length">{{ CART.length }}</span></span
+              >Корзина<span class="header_bottom_quantity" v-if="CART.length">{{
+                CART.length
+              }}</span></span
             >
           </div>
         </nuxt-link>
@@ -68,8 +75,13 @@
           <b-icon icon="lightning" aria-hidden="true"></b-icon> Следите за
           нашими новинками в социальных сетях
         </div>
-        <input placeholder="Введите название товара" class="footer_input" />
-        <div class="search">
+        <input
+          v-model="searchValue"
+          placeholder="Введите название товара"
+          class="footer_input"
+          v-on:keyup.enter="search(searchValue)"
+        />
+        <div class="search" @click="search(searchValue)">
           <b-icon
             stacked
             icon="search"
@@ -118,6 +130,33 @@
     </footer>
   </div>
 </template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      searchValue: "",
+    };
+  },
+  methods: {
+    ...mapActions(["GET_SEARCH_VALUE"]),
+    toggleMenu: function () {
+      let element = document.querySelector(".catalog_block");
+      let burger = document.querySelector(".burger_menu");
+      element.classList.toggle("active");
+      burger.classList.toggle("active");
+    },
+    search(value) {
+      this.GET_SEARCH_VALUE(value);
+      this.$router.push("/catalog");
+    },
+  },
+  computed: {
+    ...mapGetters(["CART"]),
+  },
+};
+</script>
 
 <style scoped>
 * {
@@ -235,6 +274,9 @@ body {
 .header_bottom_button:hover {
   color: #df3737;
 }
+.header_bottom_quantity {
+  margin-left: 5px;
+}
 .footer_top_title {
   font-size: 24px;
 }
@@ -332,21 +374,3 @@ body {
   }
 }
 </style>
-<script>
-import { mapGetters } from "vuex";
-export default {
-  // mounted() {
-  // },
-  methods: {
-    toggleMenu: function () {
-      let element = document.querySelector(".catalog_block");
-      let burger = document.querySelector(".burger_menu");
-      element.classList.toggle("active");
-      burger.classList.toggle("active");
-    },
-  },
-  computed: {
-    ...mapGetters(["CART"]),
-  },
-};
-</script>

@@ -5,7 +5,7 @@
       <div class="categories_items">
         <div
           class="categories_item"
-          v-for="(item, index) in $store.state.allState.catalog"
+          v-for="(item, index) in products"
           :key="item.name"
         >
           <popup
@@ -51,7 +51,9 @@ import spacePrice from "../filters/spacePrice";
 
 export default {
   data() {
-    return {};
+    return {
+      products: [],
+    };
   },
   filters: {
     toFix,
@@ -68,11 +70,26 @@ export default {
     closePopup(index) {
       this.CLOSE_POPUP(index);
     },
+    sortProducts(value) {
+      if (value) {
+        this.products = this.CATALOG.filter(function (item) {
+          return item.name.toLowerCase().includes(value.toLowerCase());
+        });
+      } else {
+        this.products = this.CATALOG;
+      }
+    },
   },
   computed: {
-    ...mapGetters(["CATALOG"]),
+    ...mapGetters(["CATALOG", "SEACH_VALUE"]),
+  },
+  watch: {
+    SEACH_VALUE() {
+      this.sortProducts(this.SEACH_VALUE);
+    },
   },
   mounted() {
+    this.sortProducts(this.SEACH_VALUE);
     let vm = this;
     this.CATALOG.map(function (item) {
       if (!item.show) {

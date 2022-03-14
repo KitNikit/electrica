@@ -4,8 +4,9 @@ import catalog from "./states/catalog";
 import cart from "./states/cart";
 import popular from "./states/popular";
 import week from "./states/week";
+import searchValue from "./states/searchValue";
 
-const allState = { ...catalog, ...cart, ...popular, ...week };
+const allState = { ...catalog, ...cart, ...popular, ...week, ...searchValue };
 
 Vue.use(Vuex);
 
@@ -52,6 +53,9 @@ const store = () =>
           state.allState.catalog[index].show = false;
         }
       },
+      SET_SEARCH_VALUE(state, value) {
+        state.allState.searchValue = value;
+      },
     },
     actions: {
       ADD_TO_CART({ commit }, product) {
@@ -72,6 +76,9 @@ const store = () =>
       CLOSE_POPUP({ commit }, index) {
         commit("CLOSE", index);
       },
+      GET_SEARCH_VALUE({ commit }, value) {
+        commit("SET_SEARCH_VALUE", value);
+      },
     },
     getters: {
       CART(state) {
@@ -79,6 +86,9 @@ const store = () =>
       },
       CATALOG(state) {
         return state.allState.catalog;
+      },
+      SEACH_VALUE(state) {
+        return state.allState.searchValue;
       },
     },
   });

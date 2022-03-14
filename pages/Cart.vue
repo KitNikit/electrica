@@ -95,7 +95,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .cart_title {
   margin-left: 30px;
 }
