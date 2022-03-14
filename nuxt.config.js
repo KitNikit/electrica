@@ -42,6 +42,7 @@ export default {
     "bootstrap-vue/nuxt",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    "nuxt-material-design-icons",
   ],
   bootstrapVue: {
     icons: true,

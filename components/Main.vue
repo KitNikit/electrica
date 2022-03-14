@@ -1,7 +1,7 @@
 <template>
   <body>
     <div class="catalog_block">
-      <div class="catalog_button">Диодная лента</div>
+      <div class="catalog_button"><NuxtLink to="">Диодная лента</NuxtLink></div>
       <div class="catalog_button">Розетки и выключатели</div>
       <div class="catalog_button">Светильники и прожекторы</div>
       <div class="catalog_button">Автоматы, УЗО, рубильники</div>
@@ -16,34 +16,14 @@
     <div class="categories_container">
       <div class="categories_title">Популярные категории</div>
       <div class="categories_items">
-        <div class="categories_item">
-          <div class="cat_item_title">Кабель-провод</div>
+        <div
+          class="categories_item"
+          v-for="item in $store.state.allState.popular"
+          :key="item.name"
+        >
+          <div class="cat_item_title">{{ item.name }}</div>
           <div class="cat_item_img">
-            <img src="../static/img/1.png" />
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">Тёплый пол</div>
-          <div class="cat_item_img">
-            <img src="../static/img/2.png" />
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">Вентиляция</div>
-          <div class="cat_item_img">
-            <img src="../static/img/3.png" />
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">Умный дом</div>
-          <div class="cat_item_img">
-            <img src="../static/img/4.png" />
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">Автоматы, УЗО, рубильники</div>
-          <div class="cat_item_img">
-            <img src="../static/img/5.png" />
+            <img :src="`${item.src}`" />
           </div>
         </div>
       </div>
@@ -51,83 +31,19 @@
     <div class="categories_container">
       <div class="categories_title two">Товары недели</div>
       <div class="categories_items">
-        <div class="categories_item">
+        <div
+          class="categories_item"
+          v-for="item in $store.state.allState.week"
+          :key="item.name"
+        >
           <div class="cat_item_title">
-            Кабель силовой алюминиевый бронированный 4х16 мм
+            {{ item.name }}
           </div>
           <div class="cat_item_img">
-            <img src="../static/img/11.png" />
+            <img :src="`${item.src}`" />
           </div>
           <div class="cat_item_price">
-            <div class="price_number">222,30 ₽</div>
-            <div class="price_basket">
-              <b-icon icon="cart3" scale="0.9"></b-icon>
-            </div>
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">
-            Таймер розеточный, 7-дневная программа 16 А TDM
-          </div>
-          <div class="cat_item_img">
-            <img src="../static/img/12.png" />
-          </div>
-          <div class="cat_item_price">
-            <div class="price_number">779,00 ₽</div>
-            <div class="price_basket">
-              <b-icon icon="cart3" scale="0.9"></b-icon>
-            </div>
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">Реле контроля напряжения RBUZ D63t</div>
-          <div class="cat_item_img">
-            <img src="../static/img/13.png" />
-          </div>
-          <div class="cat_item_price">
-            <div class="price_number">3705,00 ₽</div>
-            <div class="price_basket">
-              <b-icon icon="cart3" scale="0.9"></b-icon>
-            </div>
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">
-            Лампа LED "груша" Е27 11Вт (990Лм) 4000К 230В IEK ECO
-          </div>
-          <div class="cat_item_img">
-            <img src="../static/img/14.png" />
-          </div>
-          <div class="cat_item_price">
-            <div class="price_number">84,55 ₽</div>
-            <div class="price_basket">
-              <b-icon icon="cart3" scale="0.9"></b-icon>
-            </div>
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">
-            Реле контроля напряжения АЗМ LED-63А-220В TDM
-          </div>
-          <div class="cat_item_img">
-            <img src="../static/img/15.png" />
-          </div>
-          <div class="cat_item_price">
-            <div class="price_number">1681,50 ₽</div>
-            <div class="price_basket">
-              <b-icon icon="cart3" scale="0.9"></b-icon>
-            </div>
-          </div>
-        </div>
-        <div class="categories_item">
-          <div class="cat_item_title">
-            Розетка 2P+E, 16А, белый ATLAS DESIGN
-          </div>
-          <div class="cat_item_img">
-            <img src="../static/img/16.png" />
-          </div>
-          <div class="cat_item_price">
-            <div class="price_number">137,75 ₽</div>
+            <div class="price_number">{{ item.price }} ₽</div>
             <div class="price_basket">
               <b-icon icon="cart3" scale="0.9"></b-icon>
             </div>
@@ -186,6 +102,10 @@
 .catalog_button:hover {
   background-color: #f5f5f5;
   padding-left: 5px;
+}
+.catalog_button a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .categories_container {
@@ -341,8 +261,6 @@
 </style>
 <script>
 export default {
-  // mounted() {
-  // },
   methods: {
     toggleMenu: function () {
       let element = document.querySelector(".catalog_block");

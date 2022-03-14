@@ -4,14 +4,14 @@
       <header-top class="header_top w-100">
         <div class="header_title">Welcome to Electronics Store</div>
         <div class="header_button">
-          <NuxtLink to="/tel"
-            >Позвонить нам <b-icon icon="telephone" aria-hidden="true"></b-icon
-          ></NuxtLink>
-          <NuxtLink to="/mail"
-            >Написать нам
-            <b-icon icon="envelope-open" aria-hidden="true"></b-icon
-          ></NuxtLink>
-          <NuxtLink to="/map"
+          <a href="tel:555-555-5555">
+            Позвонить нам <b-icon icon="telephone" aria-hidden="true"></b-icon>
+          </a>
+          <a href="mailto: abc@example.com">
+            Написать нам
+            <b-icon icon="envelope-open" aria-hidden="true"></b-icon>
+          </a>
+          <NuxtLink to="/Map"
             >Открыть карту<b-icon icon="geo-alt" aria-hidden="true"></b-icon
           ></NuxtLink>
         </div>
@@ -33,7 +33,9 @@
         </div>
       </header-center>
       <header-bottom class="header_bottom w-100">
-        <div class="header_catalog">Каталог товаров</div>
+        <div class="header_catalog">
+          <NuxtLink to="/catalog">Каталог товаров</NuxtLink>
+        </div>
         <input placeholder="Введите название товара" class="header_input" />
         <div class="search">
           <b-icon
@@ -48,9 +50,14 @@
           <b-icon icon="suit-heart" aria-hidden="true"></b-icon>
           <span>Избранное</span>
         </div>
-        <div class="header_bottom_button">
-          <b-icon icon="cart3" aria-hidden="true"></b-icon> <span>Корзина</span>
-        </div>
+        <nuxt-link to="/Cart">
+          <div class="header_bottom_button">
+            <b-icon icon="cart3" aria-hidden="true"></b-icon>
+            <span
+              >Корзина<span v-if="CART.length">{{ CART.length }}</span></span
+            >
+          </div>
+        </nuxt-link>
         <div class="burger_menu" v-on:click="toggleMenu"></div>
       </header-bottom>
     </header>
@@ -182,10 +189,19 @@ body {
   height: 50px;
   background-color: #fed700;
 }
+.header_bottom a {
+  text-decoration: none;
+}
 .header_catalog {
   font-size: 20px;
   font-weight: bold;
   position: relative;
+}
+.header_catalog:hover {
+  color: #df3737;
+}
+.header_catalog a {
+  color: inherit;
 }
 .header_input {
   border: none;
@@ -214,6 +230,10 @@ body {
 }
 .header_bottom_button {
   margin-left: 40px;
+  color: #333e48;
+}
+.header_bottom_button:hover {
+  color: #df3737;
 }
 .footer_top_title {
   font-size: 24px;
@@ -313,6 +333,7 @@ body {
 }
 </style>
 <script>
+import { mapGetters } from "vuex";
 export default {
   // mounted() {
   // },
@@ -323,6 +344,9 @@ export default {
       element.classList.toggle("active");
       burger.classList.toggle("active");
     },
+  },
+  computed: {
+    ...mapGetters(["CART"]),
   },
 };
 </script>
