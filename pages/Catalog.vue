@@ -1,5 +1,6 @@
 <template>
   <div class="catalog">
+    <notification :messages="messages"> </notification>
     <h1>Каталог товаров</h1>
     <div class="categories_container">
       <div class="categories_items">
@@ -22,12 +23,10 @@
               {{ item.price | toFix | spacePrice }}
             </div>
           </popup>
-          <div class="cat_item_title">
-            <a href="#" @click.prevent="openPopup(index)">
-              {{ item.name }}
-            </a>
+          <div class="cat_item_title" @click.prevent="openPopup(index)">
+            {{ item.name }}
           </div>
-          <div class="cat_item_img">
+          <div class="cat_item_img" @click.prevent="openPopup(index)">
             <img :src="`${item.src}`" />
           </div>
           <div class="cat_item_price">
@@ -48,11 +47,14 @@
 import { mapGetters, mapActions } from "vuex";
 import toFix from "../filters/toFix";
 import spacePrice from "../filters/spacePrice";
+import notification from "../components/notification.vue";
 
 export default {
+  components: { notification },
   data() {
     return {
       products: [],
+      messages: [],
     };
   },
   filters: {
@@ -62,7 +64,20 @@ export default {
   methods: {
     ...mapActions(["ADD_TO_CART", "SHOW_POPUP", "CLOSE_POPUP"]),
     addToCart(item) {
-      this.ADD_TO_CART(item);
+      this.ADD_TO_CART(item)
+        .then(() => {
+          let timeStamp = Date.now().toLocaleString();
+          this.messages.unshift({
+            name: "Товар добавлен в корзину",
+            id: timeStamp,
+          });
+        })
+        .then(() => {
+          let vm = this;
+          setTimeout(function () {
+            vm.messages.splice(vm.messages.length - 1, 1);
+          }, 3000);
+        });
     },
     openPopup(index) {
       this.SHOW_POPUP(index);
@@ -79,13 +94,25 @@ export default {
         this.products = this.CATALOG;
       }
     },
+    categoryFilter() {
+      if (this.$route.query.category == "diodnaia_lenta") {
+        this.products = this.CATALOG.filter(function (item) {
+          return item.category == "Диодная лента";
+        });
+      } else {
+        this.products = this.CATALOG;
+      }
+    },
   },
   computed: {
-    ...mapGetters(["CATALOG", "SEACH_VALUE"]),
+    ...mapGetters(["CATALOG", "SEACH_VALUE", "QUERY"]),
   },
   watch: {
     SEACH_VALUE() {
       this.sortProducts(this.SEACH_VALUE);
+    },
+    QUERY() {
+      this.categoryFilter();
     },
   },
   mounted() {
@@ -96,6 +123,7 @@ export default {
         vm.$set(item, "show", false);
       }
     });
+    this.categoryFilter();
   },
 };
 </script>

@@ -1,7 +1,9 @@
 <template>
   <body>
     <div class="catalog_block">
-      <div class="catalog_button"><NuxtLink to="">Диодная лента</NuxtLink></div>
+      <div class="catalog_button" @click="categoryLink('Диодная лента')">
+        Диодная лента
+      </div>
       <div class="catalog_button">Розетки и выключатели</div>
       <div class="catalog_button">Светильники и прожекторы</div>
       <div class="catalog_button">Автоматы, УЗО, рубильники</div>
@@ -16,11 +18,7 @@
     <div class="categories_container">
       <div class="categories_title">Популярные категории</div>
       <div class="categories_items">
-        <div
-          class="categories_item"
-          v-for="item in $store.state.allState.popular"
-          :key="item.name"
-        >
+        <div class="categories_item" v-for="item in POPULAR" :key="item.name">
           <div class="cat_item_title">{{ item.name }}</div>
           <div class="cat_item_img">
             <img :src="`${item.src}`" />
@@ -29,22 +27,39 @@
       </div>
     </div>
     <div class="categories_container">
+      <notification :messages="messages"> </notification>
       <div class="categories_title two">Товары недели</div>
       <div class="categories_items">
         <div
           class="categories_item"
-          v-for="item in $store.state.allState.week"
+          v-for="(item, index) in WEEK"
           :key="item.name"
         >
-          <div class="cat_item_title">
+          <popup
+            v-if="item.show"
+            @closePopup="closePopup(index)"
+            rightButton="В корзину"
+            @rightButtonAction="addToCart(item)"
+          >
+            <img :src="`${item.src}`" />
+            <div class="cat_item_title">
+              {{ item.name }}
+            </div>
+            <div class="price_number">
+              {{ item.price | toFix | spacePrice }}
+            </div>
+          </popup>
+          <div class="cat_item_title" @click.prevent="openPopup(index)">
             {{ item.name }}
           </div>
-          <div class="cat_item_img">
+          <div class="cat_item_img" @click.prevent="openPopup(index)">
             <img :src="`${item.src}`" />
           </div>
           <div class="cat_item_price">
-            <div class="price_number">{{ item.price }} ₽</div>
-            <div class="price_basket">
+            <div class="price_number">
+              {{ item.price | toFix | spacePrice }}
+            </div>
+            <div class="price_basket" @click="addToCart(item)">
               <b-icon icon="cart3" scale="0.9"></b-icon>
             </div>
           </div>
@@ -67,6 +82,73 @@
     </div>
   </body>
 </template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+import toFix from "../filters/toFix";
+import spacePrice from "../filters/spacePrice";
+export default {
+  data() {
+    return {
+      messages: [],
+    };
+  },
+  filters: {
+    toFix,
+    spacePrice,
+  },
+  methods: {
+    ...mapActions([
+      "ADD_TO_CART",
+      "SHOW_POPUP_WEEK",
+      "CLOSE_POPUP_WEEK",
+      "GET_QUERY",
+    ]),
+    toggleMenu: function () {
+      let element = document.querySelector(".catalog_block");
+      element.classList.toggle("active");
+    },
+    addToCart(item) {
+      this.ADD_TO_CART(item)
+        .then(() => {
+          let timeStamp = Date.now().toLocaleString();
+          this.messages.unshift({
+            name: "Товар добавлен в корзину",
+            id: timeStamp,
+          });
+        })
+        .then(() => {
+          let vm = this;
+          setTimeout(function () {
+            vm.messages.splice(vm.messages.length - 1, 1);
+          }, 3000);
+        });
+    },
+    openPopup(index) {
+      this.SHOW_POPUP_WEEK(index);
+    },
+    closePopup(index) {
+      this.CLOSE_POPUP_WEEK(index);
+    },
+    categoryLink(value) {
+      this.GET_QUERY(value);
+      this.$router.push("/catalog?category=diodnaia_lenta");
+    },
+  },
+  computed: {
+    ...mapGetters(["WEEK", "POPULAR"]),
+  },
+  mounted() {
+    let vm = this;
+    this.WEEK.map(function (item) {
+      if (!item.show) {
+        vm.$set(item, "show", false);
+      }
+    });
+  },
+};
+</script>
+
 <style scoped>
 .img {
   height: 450px;
@@ -259,13 +341,3 @@
   }
 }
 </style>
-<script>
-export default {
-  methods: {
-    toggleMenu: function () {
-      let element = document.querySelector(".catalog_block");
-      element.classList.toggle("active");
-    },
-  },
-};
-</script>

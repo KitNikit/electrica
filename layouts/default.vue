@@ -19,9 +19,11 @@
       <header-center class="header_center w-100">
         <div class="header_center_box">
           <div class="header_logo">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08zRreql-8J1tiafBtEa8TKxoqEjLRcNOPg&usqp=CAU"
-            />
+            <NuxtLink to="/">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR08zRreql-8J1tiafBtEa8TKxoqEjLRcNOPg&usqp=CAU"
+              />
+            </NuxtLink>
           </div>
           <div class="header_center_button">
             <NuxtLink to="/" exact>Главная</NuxtLink>
@@ -33,7 +35,7 @@
         </div>
       </header-center>
       <header-bottom class="header_bottom w-100">
-        <div class="header_catalog">
+        <div class="header_catalog" @click="clearQuery">
           <NuxtLink to="/catalog">Каталог товаров</NuxtLink>
         </div>
         <input
@@ -140,7 +142,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_SEARCH_VALUE"]),
+    ...mapActions(["GET_SEARCH_VALUE", "GET_QUERY"]),
     toggleMenu: function () {
       let element = document.querySelector(".catalog_block");
       let burger = document.querySelector(".burger_menu");
@@ -150,6 +152,9 @@ export default {
     search(value) {
       this.GET_SEARCH_VALUE(value);
       this.$router.push("/catalog");
+    },
+    clearQuery() {
+      this.GET_QUERY();
     },
   },
   computed: {

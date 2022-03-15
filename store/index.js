@@ -5,8 +5,16 @@ import cart from "./states/cart";
 import popular from "./states/popular";
 import week from "./states/week";
 import searchValue from "./states/searchValue";
+import query from "./states/query";
 
-const allState = { ...catalog, ...cart, ...popular, ...week, ...searchValue };
+const allState = {
+  ...catalog,
+  ...cart,
+  ...popular,
+  ...week,
+  ...searchValue,
+  ...query,
+};
 
 Vue.use(Vuex);
 
@@ -53,8 +61,21 @@ const store = () =>
           state.allState.catalog[index].show = false;
         }
       },
+      SHOW_WEEK(state, index) {
+        if (state.allState.week[index].show === false) {
+          state.allState.week[index].show = true;
+        }
+      },
+      CLOSE_WEEK(state, index) {
+        if (state.allState.week[index].show === true) {
+          state.allState.week[index].show = false;
+        }
+      },
       SET_SEARCH_VALUE(state, value) {
         state.allState.searchValue = value;
+      },
+      SET_QUERY(state, value) {
+        state.allState.query = value;
       },
     },
     actions: {
@@ -76,8 +97,17 @@ const store = () =>
       CLOSE_POPUP({ commit }, index) {
         commit("CLOSE", index);
       },
+      SHOW_POPUP_WEEK({ commit }, index) {
+        commit("SHOW_WEEK", index);
+      },
+      CLOSE_POPUP_WEEK({ commit }, index) {
+        commit("CLOSE_WEEK", index);
+      },
       GET_SEARCH_VALUE({ commit }, value) {
         commit("SET_SEARCH_VALUE", value);
+      },
+      GET_QUERY({ commit }, value) {
+        commit("SET_QUERY", value);
       },
     },
     getters: {
@@ -89,6 +119,15 @@ const store = () =>
       },
       SEACH_VALUE(state) {
         return state.allState.searchValue;
+      },
+      WEEK(state) {
+        return state.allState.week;
+      },
+      POPULAR(state) {
+        return state.allState.popular;
+      },
+      QUERY(state) {
+        return state.allState.query;
       },
     },
   });
