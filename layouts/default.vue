@@ -150,15 +150,29 @@ export default {
       burger.classList.toggle("active");
     },
     search(value) {
-      this.GET_SEARCH_VALUE(value);
-      this.$router.push("/catalog");
+      if (value) {
+        this.GET_SEARCH_VALUE(value);
+        this.$router.push("/catalog");
+      } else {
+        this.GET_SEARCH_VALUE();
+      }
     },
     clearQuery() {
       this.GET_QUERY();
+      this.searchValue = "";
     },
   },
   computed: {
-    ...mapGetters(["CART"]),
+    ...mapGetters(["CART", "SEACH_VALUE", "QUERY"]),
+  },
+  watch: {
+    // SEACH_VALUE() {
+    //   this.searchValue = this.SEACH_VALUE;
+    // },
+    QUERY() {
+      this.searchValue = "";
+      this.GET_SEARCH_VALUE();
+    },
   },
 };
 </script>
@@ -275,6 +289,7 @@ body {
 .header_bottom_button {
   margin-left: 40px;
   color: #333e48;
+  width: 110px;
 }
 .header_bottom_button:hover {
   color: #df3737;

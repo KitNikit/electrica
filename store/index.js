@@ -6,6 +6,8 @@ import popular from "./states/popular";
 import week from "./states/week";
 import searchValue from "./states/searchValue";
 import query from "./states/query";
+import menu from "./states/menu";
+import product from "./states/product";
 
 const allState = {
   ...catalog,
@@ -14,6 +16,8 @@ const allState = {
   ...week,
   ...searchValue,
   ...query,
+  ...menu,
+  ...product,
 };
 
 Vue.use(Vuex);
@@ -77,6 +81,19 @@ const store = () =>
       SET_QUERY(state, value) {
         state.allState.query = value;
       },
+      SET_MENU(state) {
+        state.allState.catalog.map(function (item) {
+          if (item.category) {
+            if (!state.allState.menu.includes(item.category)) {
+              state.allState.menu.push(item.category);
+            }
+          }
+        });
+      },
+      SET_PRODUCT(state, value) {
+        state.allState.product = [];
+        state.allState.product.push(value);
+      },
     },
     actions: {
       ADD_TO_CART({ commit }, product) {
@@ -109,6 +126,12 @@ const store = () =>
       GET_QUERY({ commit }, value) {
         commit("SET_QUERY", value);
       },
+      GET_MENU({ commit }) {
+        commit("SET_MENU");
+      },
+      GET_PRODUCT({ commit }, value) {
+        commit("SET_PRODUCT", value);
+      },
     },
     getters: {
       CART(state) {
@@ -128,6 +151,12 @@ const store = () =>
       },
       QUERY(state) {
         return state.allState.query;
+      },
+      MENU(state) {
+        return state.allState.menu;
+      },
+      PRODUCT(state) {
+        return state.allState.product;
       },
     },
   });

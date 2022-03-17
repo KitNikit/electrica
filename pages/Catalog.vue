@@ -1,7 +1,20 @@
 <template>
   <div class="catalog">
     <notification :messages="messages"> </notification>
-    <h1>Каталог товаров</h1>
+    <div class="menu_list">
+      <div class="menu_list_item" v-for="value in MENU">
+        <div
+          v-if="
+            (QUERY == value && !SEACH_VALUE) ||
+            ($route.query.category == value && !SEACH_VALUE)
+          "
+          style="color: #df3737"
+        >
+          {{ value }}
+        </div>
+        <div v-else @click="categorySort(value)">{{ value }}</div>
+      </div>
+    </div>
     <div class="categories_container">
       <div class="categories_items">
         <div
@@ -23,7 +36,7 @@
               {{ item.price | toFix | spacePrice }}
             </div>
           </popup>
-          <div class="cat_item_title" @click.prevent="openPopup(index)">
+          <div class="cat_item_title" @click.prevent="openProduct(item)">
             {{ item.name }}
           </div>
           <div class="cat_item_img" @click.prevent="openPopup(index)">
@@ -62,7 +75,15 @@ export default {
     spacePrice,
   },
   methods: {
-    ...mapActions(["ADD_TO_CART", "SHOW_POPUP", "CLOSE_POPUP"]),
+    ...mapActions([
+      "ADD_TO_CART",
+      "SHOW_POPUP",
+      "CLOSE_POPUP",
+      "GET_MENU",
+      "GET_QUERY",
+      "GET_SEARCH_VALUE",
+      "GET_PRODUCT",
+    ]),
     addToCart(item) {
       this.ADD_TO_CART(item)
         .then(() => {
@@ -80,55 +101,112 @@ export default {
         });
     },
     openPopup(index) {
-      this.SHOW_POPUP(index);
+      if (this.products[index].show === false) {
+        this.products[index].show = true;
+      }
     },
     closePopup(index) {
-      this.CLOSE_POPUP(index);
+      if (this.products[index].show === true) {
+        this.products[index].show = false;
+      }
+      // this.CLOSE_POPUP(index);
     },
     sortProducts(value) {
-      if (value) {
-        this.products = this.CATALOG.filter(function (item) {
-          return item.name.toLowerCase().includes(value.toLowerCase());
-        });
-      } else {
-        this.products = this.CATALOG;
-      }
+      this.products = this.CATALOG.filter(function (item) {
+        return item.name.toLowerCase().includes(value.toLowerCase());
+      });
+      this.setShowProp();
     },
-    categoryFilter() {
-      if (this.$route.query.category == "diodnaia_lenta") {
-        this.products = this.CATALOG.filter(function (item) {
-          return item.category == "Диодная лента";
+    categorySort(value) {
+      if (this.QUERY == value) {
+        this.GET_QUERY().then(() => {
+          this.GET_QUERY(value);
         });
       } else {
-        this.products = this.CATALOG;
+        this.GET_QUERY(value);
       }
+      this.$router.push("?category=" + value);
+    },
+    sortCategory() {
+      let vm = this;
+      this.products = this.CATALOG.filter(function (item) {
+        return item.category == vm.QUERY;
+      });
+      this.setShowProp();
+    },
+    sortRoute() {
+      let vm = this;
+      this.products = this.CATALOG.filter(function (item) {
+        return item.category == vm.$route.query.category;
+      });
+      this.setShowProp();
+    },
+    setShowProp() {
+      let vm = this;
+      this.products.map(function (item) {
+        if (!item.show) {
+          vm.$set(item, "show", false);
+        }
+      });
+    },
+    openProduct(item) {
+      this.GET_PRODUCT(item);
+      this.$router.push({ path: "/product", query: { name: item.name } });
     },
   },
   computed: {
-    ...mapGetters(["CATALOG", "SEACH_VALUE", "QUERY"]),
+    ...mapGetters(["CATALOG", "SEACH_VALUE", "QUERY", "MENU"]),
   },
   watch: {
     SEACH_VALUE() {
-      this.sortProducts(this.SEACH_VALUE);
+      if (this.SEACH_VALUE) {
+        this.sortProducts(this.SEACH_VALUE);
+      } else {
+        this.products = this.CATALOG;
+      }
     },
     QUERY() {
-      this.categoryFilter();
+      if (this.QUERY) {
+        this.sortCategory();
+      } else {
+        this.products = this.CATALOG;
+      }
     },
   },
   mounted() {
-    this.sortProducts(this.SEACH_VALUE);
-    let vm = this;
-    this.CATALOG.map(function (item) {
-      if (!item.show) {
-        vm.$set(item, "show", false);
-      }
-    });
-    this.categoryFilter();
+    if (this.SEACH_VALUE) {
+      this.sortProducts(this.SEACH_VALUE);
+    } else if (this.QUERY) {
+      this.sortCategory();
+    } else if (this.$route.query.category) {
+      this.sortRoute();
+    } else {
+      this.products = this.CATALOG;
+      this.setShowProp();
+    }
+    if (!this.MENU.length) {
+      this.GET_MENU();
+    }
   },
 };
 </script>
 
 <style>
+.menu_list {
+  display: flex;
+  margin: 0 50px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.menu_list_item {
+  padding: 15px;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+.menu_list_item:hover {
+  color: #df3737;
+}
 .categories_container {
   margin: 50px 200px;
   /* height: 350px; */
@@ -186,6 +264,7 @@ export default {
   margin: 10px 30px;
   display: flex;
   justify-content: space-between;
+  line-height: 2;
 }
 .price_basket {
   background: #fed700;

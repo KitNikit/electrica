@@ -1,16 +1,13 @@
 <template>
   <body>
     <div class="catalog_block">
-      <div class="catalog_button" @click="categoryLink('Диодная лента')">
-        Диодная лента
+      <div
+        class="catalog_button"
+        v-for="value in MENU"
+        @click="categoryLink(value)"
+      >
+        {{ value }}
       </div>
-      <div class="catalog_button">Розетки и выключатели</div>
-      <div class="catalog_button">Светильники и прожекторы</div>
-      <div class="catalog_button">Автоматы, УЗО, рубильники</div>
-      <div class="catalog_button">Лампочки</div>
-      <div class="catalog_button">Вентиляция</div>
-      <div class="catalog_button">Тёплый пол</div>
-      <div class="catalog_button">Умный дом</div>
     </div>
     <div class="img">
       <img src="../static/img/bg.jpg" />
@@ -103,6 +100,7 @@ export default {
       "SHOW_POPUP_WEEK",
       "CLOSE_POPUP_WEEK",
       "GET_QUERY",
+      "GET_MENU",
     ]),
     toggleMenu: function () {
       let element = document.querySelector(".catalog_block");
@@ -132,11 +130,11 @@ export default {
     },
     categoryLink(value) {
       this.GET_QUERY(value);
-      this.$router.push("/catalog?category=diodnaia_lenta");
+      this.$router.push("/catalog?category=" + value);
     },
   },
   computed: {
-    ...mapGetters(["WEEK", "POPULAR"]),
+    ...mapGetters(["WEEK", "POPULAR", "MENU"]),
   },
   mounted() {
     let vm = this;
@@ -145,6 +143,9 @@ export default {
         vm.$set(item, "show", false);
       }
     });
+    if (!this.MENU.length) {
+      this.GET_MENU();
+    }
   },
 };
 </script>
@@ -264,6 +265,7 @@ export default {
   margin: 10px 30px;
   display: flex;
   justify-content: space-between;
+  line-height: 2;
 }
 .price_basket {
   background: #fed700;

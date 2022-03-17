@@ -1,5 +1,6 @@
 <template>
   <div class="cart">
+    <notification :messages="messages"> </notification>
     <h1>Корзина</h1>
     <div v-if="CART.length">
       <span class="cart_title">Товары:</span>
@@ -37,7 +38,9 @@ import spacePrice from "../filters/spacePrice";
 
 export default {
   data() {
-    return {};
+    return {
+      messages: [],
+    };
   },
   props: {
     cart_data: {
@@ -58,7 +61,20 @@ export default {
       "DECREMENT_CART_ITEM",
     ]),
     deleteFromCart(index) {
-      this.DELETE_FROM_CART(index);
+      this.DELETE_FROM_CART(index)
+        .then(() => {
+          let timeStamp = Date.now().toLocaleString();
+          this.messages.unshift({
+            name: "Товар удалён из корзины",
+            id: timeStamp,
+          });
+        })
+        .then(() => {
+          let vm = this;
+          setTimeout(function () {
+            vm.messages.splice(vm.messages.length - 1, 1);
+          }, 3000);
+        });
     },
     incrementItem(index) {
       this.INCREMENT_CART_ITEM(index);
@@ -106,6 +122,18 @@ export default {
   align-items: center;
   justify-content: space-around;
   box-shadow: 5px 5px 10px #c6c6c6;
+}
+.cart_item button {
+  background: #fed700;
+  border-radius: 6px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  box-shadow: 5px 5px 10px #c6c6c6;
+}
+.cart_item button:hover {
+  color: #df3737;
 }
 .cart_name {
   flex-basis: 25%;

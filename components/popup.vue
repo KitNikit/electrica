@@ -59,7 +59,7 @@ export default {
   z-index: 1;
   padding: 20px;
   position: fixed;
-  width: 400px;
+  width: 800px;
   box-shadow: 5px 5px 10px #c6c6c6;
   background: #fff;
 }
@@ -74,5 +74,34 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.popup_footer button:first-child {
+  margin: 10px;
+  background: #fed700;
+  border-radius: 6px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  box-shadow: 5px 5px 10px #c6c6c6;
+}
+.popup_footer button:first-child:hover {
+  color: #df3737;
+}
+.popup_footer button:last-child {
+  margin: 10px;
+  background: #df3737;
+  border-radius: 6px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  box-shadow: 5px 5px 10px #c6c6c6;
+}
+.popup_footer button:last-child:hover {
+  color: #fed700;
+}
+.price_number {
+  font-size: 20px;
 }
 </style>
