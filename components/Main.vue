@@ -265,7 +265,6 @@ export default {
   margin: 10px 30px;
   display: flex;
   justify-content: space-between;
-  line-height: 2;
 }
 .price_basket {
   background: #fed700;

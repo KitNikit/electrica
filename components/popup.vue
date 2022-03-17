@@ -2,7 +2,7 @@
   <div class="popup_wrapper" ref="popup_wrapper">
     <div class="popup">
       <div class="popup_header">
-        <span>Название</span>
+        <span></span>
         <span class="material-icons" @click="closePopup">close</span>
       </div>
       <div class="popup_content">
@@ -101,7 +101,7 @@ export default {
 .popup_footer button:last-child:hover {
   color: #fed700;
 }
-.price_number {
-  font-size: 20px;
+.popup_header .material-icons {
+  cursor: pointer;
 }
 </style>

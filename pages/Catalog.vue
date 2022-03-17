@@ -32,7 +32,7 @@
             <div class="cat_item_title">
               {{ item.name }}
             </div>
-            <div class="price_number">
+            <div class="cat_item_price">
               {{ item.price | toFix | spacePrice }}
             </div>
           </popup>
@@ -264,7 +264,6 @@ export default {
   margin: 10px 30px;
   display: flex;
   justify-content: space-between;
-  line-height: 2;
 }
 .price_basket {
   background: #fed700;
