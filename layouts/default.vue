@@ -27,7 +27,7 @@
           </div>
           <div class="header_center_button">
             <NuxtLink to="/" exact>Главная</NuxtLink>
-            <NuxtLink to="/mail">О нас</NuxtLink>
+            <NuxtLink to="/map">О нас</NuxtLink>
             <NuxtLink to="/map">Контакты</NuxtLink>
             <NuxtLink to="/map">Статьи</NuxtLink>
             <NuxtLink to="/map">FAQ</NuxtLink>
