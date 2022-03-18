@@ -1,10 +1,10 @@
 <template>
   <div class="popup_wrapper" ref="popup_wrapper">
     <div class="popup">
-      <div class="popup_header">
-        <span></span>
+      <!-- <div class="popup_header">
+        <span>Name</span>
         <span class="material-icons" @click="closePopup">close</span>
-      </div>
+      </div> -->
       <div class="popup_content">
         <slot></slot>
       </div>
@@ -59,7 +59,7 @@ export default {
   z-index: 1;
   padding: 20px;
   position: fixed;
-  width: 800px;
+  width: 500px;
   box-shadow: 5px 5px 10px #c6c6c6;
   background: #fff;
 }

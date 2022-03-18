@@ -29,12 +29,12 @@
             @rightButtonAction="addToCart(item)"
           >
             <img :src="`${item.src}`" />
-            <div class="cat_item_title">
+            <!-- <div class="cat_item_title">
               {{ item.name }}
             </div>
             <div class="cat_item_price">
               {{ item.price | toFix | spacePrice }}
-            </div>
+            </div> -->
           </popup>
           <div class="cat_item_title" @click.prevent="openProduct(item)">
             {{ item.name }}
