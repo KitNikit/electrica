@@ -8,7 +8,8 @@
       >
         <div class="notofocation_content_text">
           <span>{{ message.name }}</span>
-          <i class="material-icons">check_circle</i>
+          <!-- <i class="material-icons">check_circle</i> -->
+          <i class="done"><img src="../static/img/done.png" /></i>
         </div>
       </div>
     </transition-group>
@@ -49,6 +50,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.notofocation_content_text .done img {
+  margin-left: 10px;
+  width: 40px;
 }
 .material-icons {
   margin-left: 16px;

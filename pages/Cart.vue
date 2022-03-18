@@ -170,8 +170,13 @@ export default {
   cursor: pointer;
 }
 .cart_info {
+  flex-basis: 50%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+.cart_name {
+  flex-basis: 50%;
 }
 @media (max-width: 768px) {
   .cart_item {
