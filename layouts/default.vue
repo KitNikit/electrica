@@ -368,7 +368,7 @@ body {
   }
   .header_bottom_logo {
     display: block;
-    margin: 0 20px;
+    margin: 0 10px;
   }
   .header_bottom_logo img {
     height: 45px;
@@ -403,6 +403,7 @@ body {
   .header_bottom_button {
     font-size: 24px;
     width: auto;
+    margin-left: 0;
   }
   .header_catalog {
     margin: 0 10px;

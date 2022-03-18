@@ -176,6 +176,7 @@ export default {
 @media (max-width: 768px) {
   .cart_item {
     margin: 30px 10px;
+    height: auto;
   }
   .cart_quantity {
     display: flex;
@@ -192,6 +193,9 @@ export default {
   .cart_price,
   .cart_quantity {
     margin: 5px;
+  }
+  .cart_quantity_number span {
+    padding: 0 7px;
   }
 }
 </style>
