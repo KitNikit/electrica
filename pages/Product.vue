@@ -5,7 +5,7 @@
       <img class="product_cart_img" :src="`${item.src}`" />
       <div class="product_cart_content">
         <div>{{ item.name }}</div>
-        <div>{{ item.price | toFix | spacePrice }}</div>
+        <div>Цена: {{ item.price | toFix | spacePrice }}</div>
       </div>
     </div>
     <button class="product_basket" @click="addToCart(product)">
@@ -95,5 +95,15 @@ export default {
 }
 .product_basket:hover {
   color: #df3737;
+}
+@media (max-width: 768px) {
+  .product_cart {
+    margin: 0;
+    padding-top: 70px;
+  }
+  .product_cart_img {
+    object-fit: contain;
+    margin: 20px;
+  }
 }
 </style>

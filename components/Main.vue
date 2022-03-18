@@ -15,8 +15,15 @@
     <div class="categories_container">
       <div class="categories_title">Популярные категории</div>
       <div class="categories_items">
-        <div class="categories_item" v-for="item in POPULAR" :key="item.name">
-          <div class="cat_item_title">{{ item.name }}</div>
+        <div
+          class="categories_item"
+          v-for="item in POPULAR"
+          :key="item.name"
+          @click="categoryLink(item.name)"
+        >
+          <div class="cat_item_title">
+            {{ item.name }}
+          </div>
           <div class="cat_item_img">
             <img :src="`${item.src}`" />
           </div>
@@ -102,10 +109,10 @@ export default {
       "GET_QUERY",
       "GET_MENU",
     ]),
-    toggleMenu: function () {
-      let element = document.querySelector(".catalog_block");
-      element.classList.toggle("active");
-    },
+    // toggleMenu: function () {
+    //   let element = document.querySelector(".catalog_block");
+    //   element.classList.toggle("active");
+    // },
     addToCart(item) {
       this.ADD_TO_CART(item)
         .then(() => {
@@ -150,7 +157,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .img {
   height: 450px;
 }
@@ -201,12 +208,13 @@ export default {
   display: flex;
   border-right: 1px solid #fed700;
   border-radius: 5px;
-  flex: 1;
+  width: 16.6%;
   margin: 25px 0;
   flex-direction: column;
 }
 .categories_items {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 100%;
 }
@@ -234,6 +242,7 @@ export default {
   color: #0062bd;
   align-self: center;
   margin: 10px;
+  cursor: pointer;
 }
 .cat_item_img {
   height: 100%;
@@ -302,7 +311,7 @@ export default {
 .partner_item img {
   height: 100%;
 }
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
   .catalog_block {
     top: -100%;
     left: 0;
@@ -316,7 +325,7 @@ export default {
     margin: 1px 70px;
   }
   .img {
-    height: 400px;
+    height: 250px;
   }
   .categories_container,
   .partner_container {
@@ -326,16 +335,18 @@ export default {
   .categories_items {
     flex-direction: column;
   }
-  .categories_item {
+  .categories_item,
+  .categories_item:nth-last-child(1) {
     border: 1px solid #fed700;
+    width: 100%;
   }
   .partner_items {
     flex-wrap: wrap;
     height: 100%;
   }
   .partner_item {
-    width: 44%;
-    margin: 10px;
+    width: 48%;
+    margin: 1%;
   }
   .partner_item img {
     width: 100%;

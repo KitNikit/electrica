@@ -1,27 +1,30 @@
 <template>
   <div class="cart">
     <notification :messages="messages"> </notification>
-    <h1>Корзина</h1>
-    <div v-if="CART.length">
+    <div class="cart_page" v-if="CART.length">
       <span class="cart_title">Товары:</span>
       <div class="cart_item" v-for="(item, index) in CART" :key="item.name">
         <div class="cat_item_img">
           <img :src="`${item.src}`" />
         </div>
-        <div class="cart_name">{{ item.name }}</div>
-        <div class="cart_price">{{ item.price | toFix | spacePrice }}</div>
-        <div class="cart_quantity">
-          <div>Количество:</div>
-          <div class="cart_quantity_number">
-            <span @click="decrementItem(index)">-</span>
-            {{ item.quantity }}
-            <span @click="incrementItem(index)">+</span>
+        <div class="cart_info">
+          <div class="cart_name">{{ item.name }}</div>
+          <div class="cart_price">
+            Цена: {{ item.price | toFix | spacePrice }}
+          </div>
+          <div class="cart_quantity">
+            Количество:
+            <div class="cart_quantity_number">
+              <span @click="decrementItem(index)">-</span>
+              {{ item.quantity }}
+              <span @click="incrementItem(index)">+</span>
+            </div>
           </div>
         </div>
         <button @click="deleteFromCart(index)">Удалить</button>
       </div>
     </div>
-    <div v-else>В корзине нет товаров</div>
+    <div class="cart_null" v-else>В корзине нет товаров</div>
     <div class="cart_total">
       <p>Всего:</p>
       <span class="cart_total_value">
@@ -112,7 +115,15 @@ export default {
 </script>
 
 <style scoped>
+.cart_page {
+  padding-top: 70px;
+}
+.cart_null {
+  padding: 70px 30px 20px;
+  font-size: 20px;
+}
 .cart_title {
+  font-size: 20px;
   margin-left: 30px;
 }
 .cart_item {
@@ -131,12 +142,15 @@ export default {
   font-weight: bold;
   padding: 10px;
   box-shadow: 5px 5px 10px #c6c6c6;
+  margin: 0 5px;
 }
 .cart_item button:hover {
   color: #df3737;
 }
-.cart_name {
-  flex-basis: 25%;
+.cart_name,
+.cart_price,
+.cart_quantity {
+  margin: 5px 50px;
 }
 .cat_item_img {
   flex-basis: 10%;
@@ -152,7 +166,32 @@ export default {
   display: flex;
 }
 .cart_quantity_number span {
-  margin: 0 10px;
+  padding: 0 15px;
   cursor: pointer;
+}
+.cart_info {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .cart_item {
+    margin: 30px 10px;
+  }
+  .cart_quantity {
+    display: flex;
+    align-items: center;
+  }
+  .cat_item_img img {
+    width: 70px;
+    object-fit: contain;
+  }
+  .cart_info {
+    display: block;
+  }
+  .cart_name,
+  .cart_price,
+  .cart_quantity {
+    margin: 5px;
+  }
 }
 </style>

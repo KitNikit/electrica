@@ -35,6 +35,11 @@
         </div>
       </header-center>
       <header-bottom class="header_bottom w-100">
+        <div class="header_bottom_logo">
+          <NuxtLink to="/">
+            <img src="../static/img/logo.png" />
+          </NuxtLink>
+        </div>
         <div class="header_catalog" @click="clearQuery">
           <NuxtLink to="/catalog">Каталог товаров</NuxtLink>
         </div>
@@ -53,21 +58,16 @@
             shift-v="2"
           ></b-icon>
         </div>
-        <div class="header_bottom_button">
-          <b-icon icon="suit-heart" aria-hidden="true"></b-icon>
-          <span>Избранное</span>
-        </div>
         <nuxt-link to="/Cart">
           <div class="header_bottom_button">
             <b-icon icon="cart3" aria-hidden="true"></b-icon>
-            <span
-              >Корзина<span class="header_bottom_quantity" v-if="CART.length">{{
-                CART.length
-              }}</span></span
-            >
+            <span class="header_bottom_basket">Корзина</span>
+            <span class="header_bottom_quantity" v-if="CART.length > 0">{{
+              CART.length
+            }}</span>
           </div>
         </nuxt-link>
-        <div class="burger_menu" v-on:click="toggleMenu"></div>
+        <div class="burger_menu" @click="toggleMenu"></div>
       </header-bottom>
     </header>
     <Nuxt />
@@ -143,8 +143,8 @@ export default {
   },
   methods: {
     ...mapActions(["GET_SEARCH_VALUE", "GET_QUERY"]),
-    toggleMenu: function () {
-      let element = document.querySelector(".catalog_block");
+    toggleMenu() {
+      let element = document.querySelector(".header_center");
       let burger = document.querySelector(".burger_menu");
       element.classList.toggle("active");
       burger.classList.toggle("active");
@@ -174,10 +174,20 @@ export default {
       this.GET_SEARCH_VALUE();
     },
   },
+  mounted() {
+    document.addEventListener("click", function (item) {
+      let element = document.querySelector(".header_center");
+      let burger = document.querySelector(".burger_menu");
+      if (item.target != burger && burger.classList.contains("active")) {
+        element.classList.toggle("active");
+        burger.classList.toggle("active");
+      }
+    });
+  },
 };
 </script>
 
-<style scoped>
+<style>
 * {
   font-family: "Roboto", sans-serif;
 }
@@ -255,12 +265,7 @@ body {
   font-weight: bold;
   position: relative;
 }
-.header_catalog:hover {
-  color: #df3737;
-}
-.header_catalog a {
-  color: inherit;
-}
+
 .header_input {
   border: none;
   margin-left: 50px;
@@ -321,7 +326,7 @@ body {
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  margin-left: 30%;
+  align-items: center;
 }
 .footer_phone a {
   font-size: 26px;
@@ -348,25 +353,59 @@ body {
   background: #333e48;
   color: white;
 }
-.burger_menu {
+.burger_menu,
+.header_bottom_logo {
   display: none;
 }
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
   .header_top,
-  .header_catalog,
-  .header_center,
+  .header_bottom_basket,
+  .header_logo,
   .header_bottom input,
   .header_bottom .search,
-  .header_bottom_button span,
-  .footer_top_title
-  /* .burger_menu.active .open_menu */ {
+  .footer_top_title {
     display: none;
   }
+  .header_bottom_logo {
+    display: block;
+    margin: 0 20px;
+  }
+  .header_bottom_logo img {
+    height: 45px;
+  }
+  .header_center {
+    transition: all 0.4s ease-out;
+    position: fixed;
+    background: #fff;
+    top: -100%;
+    z-index: 2;
+    box-shadow: 4px 4px 11px rgb(51 62 72 / 35%);
+  }
+  .header_center.active {
+    top: 50px;
+  }
+  .header_center_box {
+    margin-left: 0;
+  }
+  .header_center_button {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .header_center_button a {
+    margin: 10px 30px;
+  }
   .header_bottom {
+    position: fixed;
     justify-content: start;
+    z-index: 2;
   }
   .header_bottom_button {
     font-size: 24px;
+    width: auto;
+  }
+  .header_catalog {
+    margin: 0 10px;
   }
   .burger_menu {
     display: block;
@@ -382,15 +421,11 @@ body {
   .burger_menu.active {
     position: fixed;
     right: 15px;
-    background: center / contain no-repeat url("../static/img/del.png");
+    background: center / contain no-repeat url("../static/img/cancel.png");
   }
   .footer_input {
     margin-left: 0;
     width: 300px;
-  }
-  .footer_container {
-    margin: 0;
-    align-items: center;
   }
 }
 </style>

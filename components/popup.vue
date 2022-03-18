@@ -104,4 +104,9 @@ export default {
 .popup_header .material-icons {
   cursor: pointer;
 }
+@media (max-width: 768px) {
+  .popup {
+    width: 100%;
+  }
+}
 </style>

@@ -23,7 +23,7 @@ export default {};
 
 <style>
 h1 {
-  margin-top: 30px;
+  padding-top: 30px;
   text-align: center;
 }
 iframe {
