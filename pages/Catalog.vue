@@ -1,18 +1,25 @@
 <template>
   <div class="catalog">
     <notification :messages="messages"> </notification>
-    <div class="menu_list">
-      <div class="menu_list_item" v-for="value in MENU">
-        <div
-          v-if="
-            (QUERY == value && !SEACH_VALUE) ||
-            ($route.query.category == value && !SEACH_VALUE)
-          "
-          style="color: #df3737"
-        >
-          {{ value }}
+    <div class="catalog_menu">
+      <div class="menu_show">
+        <div class="menu_show_btn" @click="showMenu">
+          Категории<img src="../static/img/arrow-top.png" />
         </div>
-        <div v-else @click="categorySort(value)">{{ value }}</div>
+      </div>
+      <div class="menu_list">
+        <div class="menu_list_item" v-for="value in MENU">
+          <div
+            v-if="
+              (QUERY == value && !SEACH_VALUE) ||
+              ($route.query.category == value && !SEACH_VALUE)
+            "
+            style="color: #df3737"
+          >
+            {{ value }}
+          </div>
+          <div v-else @click="categorySort(value)">{{ value }}</div>
+        </div>
       </div>
     </div>
     <div class="categories_container">
@@ -84,6 +91,10 @@ export default {
       "GET_SEARCH_VALUE",
       "GET_PRODUCT",
     ]),
+    showMenu() {
+      let menu = document.querySelector(".catalog_menu");
+      menu.classList.toggle("active");
+    },
     addToCart(item) {
       this.ADD_TO_CART(item)
         .then(() => {
@@ -192,6 +203,9 @@ export default {
 </script>
 
 <style>
+.catalog .categories_container {
+  margin-top: 0;
+}
 .menu_list {
   display: flex;
   margin: 0 50px;
@@ -207,10 +221,39 @@ export default {
 .menu_list_item:hover {
   color: #df3737;
 }
+.menu_show {
+  display: none;
+}
 @media (max-width: 768px) {
+  .menu_show {
+    padding-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu_show_btn {
+    margin: 15px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .menu_show_btn img {
+    height: 30px;
+    margin-left: 15px;
+    transition: all 0.2s ease-in-out;
+    transform: rotate(180deg);
+  }
+  .catalog_menu.active .menu_show img {
+    transform: rotate(0);
+  }
   .menu_list {
     margin: 0 10px;
-    padding-top: 50px;
+    margin-top: -100%;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+  }
+  .catalog_menu.active .menu_list {
+    margin-top: 0;
+    visibility: visible;
   }
 }
 </style>
