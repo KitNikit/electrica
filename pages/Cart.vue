@@ -50,17 +50,29 @@
     >
       <form name="contact" method="POST" data-netlify="true">
         <div>
-          <input type="text" name="имя" />
+          <input type="text" name="name" />
           <label>Имя </label>
         </div>
         <div>
-          <input type="tel" name="телефон" required />
+          <input type="tel" name="tel" required />
           <label>Телефон </label>
         </div>
         <!-- <div><input type="hidden" name="товары" v-model="cart_data" /></div> -->
         <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
+    <form name="contact" method="POST" data-netlify="true">
+      <p>
+        <label>Your Name: <input type="text" name="name" /></label>
+      </p>
+      <p>
+        <label>Your Email: <input type="email" name="email" /></label>
+      </p>
+
+      <p>
+        <button type="submit">Send</button>
+      </p>
+    </form>
   </div>
 </template>
 
