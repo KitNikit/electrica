@@ -62,6 +62,7 @@
       </form>
     </popup>
     <form
+      action="/catalog"
       id="test"
       @submit="test"
       name="contact"
