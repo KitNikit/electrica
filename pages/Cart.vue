@@ -42,7 +42,7 @@
         Отправить запрос
       </button>
     </div>
-    <popup
+    <!-- <popup
       v-if="showPopup"
       @closePopup="closePopup"
       rightButton="Отправить"
@@ -57,10 +57,10 @@
           <input type="tel" name="tel" required />
           <label>Телефон </label>
         </div>
-        <!-- <div><input type="hidden" name="товары" v-model="cart_data" /></div> -->
+        <div><input type="hidden" name="товары" v-model="cart_data" /></div>
         <input style="display: none" class="submit_form" type="submit" />
       </form>
-    </popup>
+    </popup> -->
     <form name="contact" method="POST" data-netlify="true">
       <p>
         <label>Your Name: <input type="text" name="name" /></label>
@@ -108,12 +108,12 @@ export default {
       "INCREMENT_CART_ITEM",
       "DECREMENT_CART_ITEM",
     ]),
-    closePopup() {
-      this.showPopup = false;
-    },
-    sendForm() {
-      let form = document.querySelector(".submit_form").click();
-    },
+    // closePopup() {
+    //   this.showPopup = false;
+    // },
+    // sendForm() {
+    //   let form = document.querySelector(".submit_form").click();
+    // },
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index)
         .then(() => {
@@ -244,7 +244,7 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-form input {
+/* form input {
   font-size: 16px;
   display: block;
   width: 300px;
@@ -263,7 +263,7 @@ form div {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column-reverse;
-}
+} */
 
 @media (max-width: 768px) {
   .cart_item {
