@@ -65,7 +65,7 @@
       </form>
     </popup>
     <form name="hidden_form" method="POST" data-netlify="true">
-      <input type="hidden" name="items" value="123" />
+      <input type="hidden" name="items" value="{{CATALOG[0].name}}" />
       <button type="submit">Send</button>
     </form>
   </div>
@@ -154,7 +154,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["CART"]),
+    ...mapGetters(["CART", "CATALOG"]),
     cartTotal() {
       let result = [];
       if (this.CART.length) {
