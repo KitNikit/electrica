@@ -65,7 +65,7 @@
       </form>
     </popup>
     <form name="hidden_form" method="POST" data-netlify="true">
-      <input type="hidden" name="items" v-model="cart_data" />
+      <input type="hidden" name="items" value="123" />
       <button type="submit">Send</button>
     </form>
   </div>
