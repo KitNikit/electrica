@@ -25,51 +25,42 @@
       </div>
     </div>
     <div class="cart_null" v-else>В корзине нет товаров</div>
-    <div class="cart_total">
-      <p>Всего:</p>
-      <span class="cart_total_value">
-        <p>{{ cartTotal | toFix | spacePrice }}</p>
-      </span>
+    <div class="cart_bottom_menu">
+      <div class="cart_total">
+        <div>Всего:</div>
+        <div class="cart_total_value">{{ cartTotal | toFix | spacePrice }}</div>
+      </div>
+      <!-- <button @click.prevent="send">Отправить запрос</button> -->
+      <button
+        v-if="CART.length"
+        @click="
+          {
+            showPopup = true;
+          }
+        "
+      >
+        Отправить запрос
+      </button>
     </div>
-    <!-- <button @click.prevent="send">Отправить запрос</button> -->
-    <button
-      @click="
-        {
-          showPopup = true;
-        }
-      "
-    >
-      Отправить запрос
-    </button>
     <popup
       v-if="showPopup"
       @closePopup="closePopup"
       rightButton="Отправить"
       @rightButtonAction="sendForm"
     >
-      <form @submit.prevent="axiosSubmit" name="contact" netlify>
-        <p>
-          <label>Name <input type="text" name="name" /></label>
-        </p>
-        <p>
-          <label>Email <input type="email" name="email" required /></label>
-        </p>
-        <p>
-          <button type="submit">Send</button>
-        </p>
+      <form action="/catalog" name="contact" method="POST" data-netlify="true">
+        <div>
+          <input type="text" name="имя" />
+          <label>Имя </label>
+        </div>
+        <div>
+          <input type="tel" name="телефон" required />
+          <label>Телефон </label>
+        </div>
+        <div><input type="hidden" name="товары" v-model="cart_data" /></div>
+        <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
-    <form name="contact" method="POST" data-netlify="true">
-      <p>
-        <label>Your Name: <input type="text" name="name" /></label>
-      </p>
-      <p>
-        <label>Your Email: <input type="email" name="email" /></label>
-      </p>
-      <p>
-        <button type="submit">Send</button>
-      </p>
-    </form>
   </div>
 </template>
 
@@ -84,16 +75,17 @@ export default {
       messages: [],
       showPopup: false,
       axiosPost: { name: "test", mail: "123" },
+      cart_data: [],
     };
   },
-  props: {
-    cart_data: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-  },
+  // props: {
+  //   cart_data: {
+  //     type: Array,
+  //     default() {
+  //       return [];
+  //     },
+  //   },
+  // },
   filters: {
     toFix,
     spacePrice,
@@ -108,15 +100,7 @@ export default {
       this.showPopup = false;
     },
     sendForm() {
-      let form = document.querySelector("form");
-      form.submit();
-    },
-    axiosSubmit() {
-      this.$axios
-        .$post("https://electrica.netlify.app/cart", this.axiosPost)
-        .then((result) => {
-          console.log(result);
-        });
+      let form = document.querySelector(".submit_form").click();
     },
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index)
@@ -168,6 +152,7 @@ export default {
   mounted() {
     let vm = this;
     this.CART.map(function (item) {
+      vm.cart_data.push(item.name);
       if (!item.quantity) {
         vm.$set(item, "quantity", 1);
       }
@@ -196,7 +181,8 @@ export default {
   justify-content: space-around;
   box-shadow: 5px 5px 10px #c6c6c6;
 }
-.cart_item button {
+.cart_item button,
+.cart_bottom_menu button {
   background: #fed700;
   border-radius: 6px;
   border: none;
@@ -205,6 +191,7 @@ export default {
   padding: 10px;
   box-shadow: 5px 5px 10px #c6c6c6;
   margin: 0 5px;
+  height: fit-content;
 }
 .cart_item button:hover {
   color: #df3737;
@@ -222,7 +209,6 @@ export default {
 }
 .cart_total {
   font-size: 20px;
-  margin-left: 30px;
 }
 .cart_total_value {
   display: flex;
@@ -240,6 +226,33 @@ export default {
 .cart_name {
   flex-basis: 50%;
 }
+.cart_bottom_menu {
+  margin: 0 30px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+form input {
+  font-size: 16px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+form input:focus + label {
+  color: #fed700;
+}
+form input:focus {
+  outline: none;
+  border-bottom-color: #fed700;
+}
+form div {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 @media (max-width: 768px) {
   .cart_item {
     margin: 30px 10px;
@@ -263,6 +276,9 @@ export default {
   }
   .cart_quantity_number span {
     padding: 0 7px;
+  }
+  .cart_bottom_menu {
+    margin: 0 10px 30px;
   }
 }
 </style>
