@@ -145,7 +145,7 @@ export default {
       this.$axios.$post("/mail/send", {
         from: "John Doe",
         subject: "Incredible",
-        text: this.cart_data,
+        text: "This is an incredible test message",
       });
     },
   },
