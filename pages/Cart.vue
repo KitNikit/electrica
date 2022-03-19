@@ -48,12 +48,7 @@
       rightButton="Отправить"
       @rightButtonAction="sendForm"
     >
-      <form
-        action="https://electrica.netlify.app/catalog"
-        name="contact"
-        method="POST"
-        data-netlify="true"
-      >
+      <form name="contact" method="POST" data-netlify="true">
         <div>
           <input type="text" name="имя" />
           <label>Имя </label>
