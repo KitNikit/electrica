@@ -65,7 +65,7 @@
       </form>
     </popup>
     <form name="hidden_form" method="POST" data-netlify="true">
-      <input type="hidden" name="items" value="{{CATALOG[0].name}}" />
+      <input type="hidden" name="items" value="{test}" />
       <button type="submit">Send</button>
     </form>
   </div>
