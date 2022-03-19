@@ -65,7 +65,7 @@
       </form>
     </popup>
     <form name="hidden_form" method="POST" data-netlify="true">
-      <input id="my_input" type="hidden" name="items" v-bind:value="test" />
+      <input id="my_input" type="text" name="items" :value="this.$route.path" />
       <button type="submit">Send</button>
     </form>
   </div>
@@ -83,7 +83,6 @@ export default {
       showPopup: false,
       axiosPost: { name: "test", mail: "123" },
       cart_data: [],
-      test: "123",
     };
   },
   // props: {
@@ -179,8 +178,6 @@ export default {
         vm.$set(item, "quantity", 1);
       }
     });
-    this.test = this.CATALOG[0].name;
-    console.log(this.test);
   },
 };
 </script>
