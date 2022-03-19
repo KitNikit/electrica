@@ -160,6 +160,7 @@ export default {
     clearQuery() {
       this.GET_QUERY();
       this.searchValue = "";
+      this.GET_SEARCH_VALUE();
     },
   },
   computed: {

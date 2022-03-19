@@ -28,6 +28,9 @@ const store = () =>
       allState,
     },
     mutations: {
+      // SET_DATA(state, items) {
+      //   state.allState.items = items;
+      // },
       SET_CART(state, product) {
         if (state.allState.cart.length) {
           let isProductExist = false;
@@ -96,6 +99,14 @@ const store = () =>
       },
     },
     actions: {
+      // GET_FROM_API({commit}) {
+      //   return this.$axios('http://localhost:3000/', {
+      //     method: 'GET'
+      //   })
+      //   .then((response) => {
+      //     commit('SET_DATA', response.data)
+      //   })
+      // },
       ADD_TO_CART({ commit }, product) {
         commit("SET_CART", product);
       },

@@ -26,7 +26,7 @@
       <div class="categories_items">
         <div
           class="categories_item"
-          v-for="(item, index) in products"
+          v-for="(item, index) in paginatedItems"
           :key="item.name"
         >
           <popup
@@ -59,6 +59,17 @@
           </div>
         </div>
       </div>
+      <div class="page">
+        <div
+          v-if="pages > 1"
+          v-for="page in pages"
+          :key="page"
+          :class="{ 'page-selected': page === pageNumber }"
+          @click="pageClick(page)"
+        >
+          {{ page }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +86,8 @@ export default {
     return {
       products: [],
       messages: [],
+      inPage: 6,
+      pageNumber: 1,
     };
   },
   filters: {
@@ -164,9 +177,20 @@ export default {
       this.GET_PRODUCT(item);
       this.$router.push({ path: "/product", query: { name: item.name } });
     },
+    pageClick(page) {
+      this.pageNumber = page;
+    },
   },
   computed: {
     ...mapGetters(["CATALOG", "SEACH_VALUE", "QUERY", "MENU"]),
+    pages() {
+      return Math.ceil(this.products.length / this.inPage);
+    },
+    paginatedItems() {
+      let from = (this.pageNumber - 1) * this.inPage;
+      let to = from + this.inPage;
+      return this.products.slice(from, to);
+    },
   },
   watch: {
     SEACH_VALUE() {
@@ -224,6 +248,25 @@ export default {
 .menu_show {
   display: none;
 }
+.page {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.page div {
+  font-weight: bold;
+  color: #0062bd;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: 1px solid #fed700;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px #c6c6c6;
+}
+.page .page-selected {
+  color: #fed700;
+}
 @media (max-width: 768px) {
   .menu_show {
     padding-top: 60px;
@@ -249,11 +292,13 @@ export default {
     margin: 0 10px;
     margin-top: -100%;
     visibility: hidden;
+    opacity: 0;
     transition: all 0.2s ease-in-out;
   }
   .catalog_menu.active .menu_list {
     margin-top: 0;
     visibility: visible;
+    opacity: 1;
   }
 }
 </style>
