@@ -64,10 +64,6 @@
         <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
-    <form name="hidden_form" method="POST" data-netlify="true">
-      <input id="my_input" type="text" name="items" :value="this.$route.path" />
-      <button type="submit">Send</button>
-    </form>
   </div>
 </template>
 
@@ -149,7 +145,7 @@ export default {
       this.$axios.$post("/mail/send", {
         from: "John Doe",
         subject: "Incredible",
-        text: "This is an incredible test message",
+        text: this.cart_data,
       });
     },
   },
