@@ -31,7 +31,7 @@
         <p>{{ cartTotal | toFix | spacePrice }}</p>
       </span>
     </div>
-    <button @click.prevent="send">Отправить запрос</button>
+    <!-- <button @click.prevent="send">Отправить запрос</button> -->
   </div>
 </template>
 
