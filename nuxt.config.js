@@ -47,10 +47,10 @@ export default {
       "nuxt-mail",
       {
         message: {
-          to: "me@mail.ru",
+          to: "vclan@mail.ru",
         },
         smtp: {
-          host: "electrica.netlify.app",
+          host: "smtp.electrica.netlify.app",
           port: 587,
         },
       },

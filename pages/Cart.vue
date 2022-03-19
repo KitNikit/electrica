@@ -31,8 +31,9 @@
         <div class="cart_total_value">{{ cartTotal | toFix | spacePrice }}</div>
       </div>
       <!-- <button @click.prevent="send">Отправить запрос</button> -->
-      <!-- v-if="CART.length" -->
+
       <button
+        v-if="CART.length"
         @click="
           {
             showPopup = true;
@@ -46,7 +47,7 @@
       v-if="showPopup"
       @closePopup="closePopup"
       rightButton="Отправить"
-      @rightButtonAction="sendForm"
+      @rightButtonAction="send"
     >
       <form name="contact" method="POST" data-netlify="true">
         <div>
@@ -57,28 +58,10 @@
           <input type="tel" name="tel" required />
           <label>Телефон </label>
         </div>
-        <!-- <div><input type="hidden" name="товары" v-model="cart_data" /></div> -->
+        <div><input type="hidden" name="товары" v-model="cart_data" /></div>
         <input class="submit_form" type="submit" />
       </form>
     </popup>
-    <form
-      action="/catalog"
-      id="test"
-      name="contact"
-      method="POST"
-      data-netlify="true"
-    >
-      <p>
-        <label>Your Name: <input type="text" name="name" /></label>
-      </p>
-      <p>
-        <label>Your Email: <input type="email" name="email" /></label>
-      </p>
-
-      <p>
-        <button type="submit">Send</button>
-      </p>
-    </form>
   </div>
 </template>
 
@@ -131,9 +114,9 @@ export default {
     closePopup() {
       this.showPopup = false;
     },
-    sendForm() {
-      document.querySelector(".submit_form").click();
-    },
+    // sendForm() {
+    //   document.querySelector(".submit_form").click();
+    // },
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index)
         .then(() => {
@@ -157,8 +140,8 @@ export default {
       this.DECREMENT_CART_ITEM(index);
     },
     send() {
-      this.$mail.send({
-        name: "test",
+      this.$axios.$post("/mail/send", {
+        from: "John Doe",
         subject: "Incredible",
         text: "This is an incredible test message",
       });
