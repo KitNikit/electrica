@@ -43,6 +43,18 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     "nuxt-material-design-icons",
+    [
+      "nuxt-mail",
+      {
+        message: {
+          to: "vclan@mail.ru",
+        },
+        smtp: {
+          host: "electrica.netlify.app",
+          port: 587,
+        },
+      },
+    ],
   ],
   bootstrapVue: {
     icons: true,

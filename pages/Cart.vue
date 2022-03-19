@@ -31,6 +31,7 @@
         <p>{{ cartTotal | toFix | spacePrice }}</p>
       </span>
     </div>
+    <button @click.prevent="send">Отправить запрос</button>
   </div>
 </template>
 
@@ -84,6 +85,13 @@ export default {
     },
     decrementItem(index) {
       this.DECREMENT_CART_ITEM(index);
+    },
+    send() {
+      this.$mail.send({
+        name: "test",
+        subject: "Incredible",
+        text: "This is an incredible test message",
+      });
     },
   },
   computed: {
