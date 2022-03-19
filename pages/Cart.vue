@@ -57,8 +57,8 @@
           <input type="tel" name="tel" required />
           <label>Телефон </label>
         </div>
-        <div><input type="hidden" name="товары" v-model="cart_data" /></div>
-        <input style="display: none" class="submit_form" type="submit" />
+        <!-- <div><input type="hidden" name="товары" v-model="cart_data" /></div> -->
+        <input class="submit_form" type="submit" />
       </form>
     </popup>
     <form
