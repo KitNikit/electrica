@@ -65,7 +65,7 @@
       </form>
     </popup>
     <form name="hidden_form" method="POST" data-netlify="true">
-      <input type="hidden" name="items" value="{test}" />
+      <input id="my_input" type="hidden" name="items" value="" />
       <button type="submit">Send</button>
     </form>
   </div>
@@ -179,7 +179,7 @@ export default {
         vm.$set(item, "quantity", 1);
       }
     });
-    this.CATALOG[0].name;
+    document.getElementById("my_input").value = this.CATALOG[0].name;
   },
 };
 </script>
