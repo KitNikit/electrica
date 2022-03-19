@@ -31,8 +31,8 @@
         <div class="cart_total_value">{{ cartTotal | toFix | spacePrice }}</div>
       </div>
       <!-- <button @click.prevent="send">Отправить запрос</button> -->
+      <!-- v-if="CART.length" -->
       <button
-        v-if="CART.length"
         @click="
           {
             showPopup = true;
