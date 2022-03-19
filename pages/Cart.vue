@@ -58,10 +58,16 @@
           <input type="tel" name="tel" required />
           <label>Телефон </label>
         </div>
-        <div><input type="hidden" name="товары" v-model="cart_data" /></div>
-        <input class="submit_form" type="submit" />
+        <div>
+          <input type="hidden" name="товары" v-model="cart_data" />
+        </div>
+        <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
+    <form name="contact" method="POST" data-netlify="true">
+      <input type="hidden" name="items" v-model="cart_data" />
+      <button type="submit">Send</button>
+    </form>
   </div>
 </template>
 
@@ -76,7 +82,7 @@ export default {
       messages: [],
       showPopup: false,
       axiosPost: { name: "test", mail: "123" },
-      cart_data: [],
+      cart_data: [123],
     };
   },
   // props: {
