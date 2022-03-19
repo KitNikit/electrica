@@ -59,6 +59,17 @@
         </p>
       </form>
     </popup>
+    <form name="contact" method="POST" data-netlify="true">
+      <p>
+        <label>Your Name: <input type="text" name="name" /></label>
+      </p>
+      <p>
+        <label>Your Email: <input type="email" name="email" /></label>
+      </p>
+      <p>
+        <button type="submit">Send</button>
+      </p>
+    </form>
   </div>
 </template>
 
@@ -102,7 +113,7 @@ export default {
     },
     axiosSubmit() {
       this.$axios
-        .$post("https://electrica.netlify.app/", this.axiosPost)
+        .$post("https://electrica.netlify.app/cart", this.axiosPost)
         .then((result) => {
           console.log(result);
         });
