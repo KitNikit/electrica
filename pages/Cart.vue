@@ -32,6 +32,33 @@
       </span>
     </div>
     <!-- <button @click.prevent="send">Отправить запрос</button> -->
+    <button
+      @click="
+        {
+          showPopup = true;
+        }
+      "
+    >
+      Отправить запрос
+    </button>
+    <popup
+      v-if="showPopup"
+      @closePopup="closePopup"
+      rightButton="Отправить"
+      @rightButtonAction="sendForm"
+    >
+      <form @submit.prevent="axiosSubmit" name="contact" netlify>
+        <p>
+          <label>Name <input type="text" name="name" /></label>
+        </p>
+        <p>
+          <label>Email <input type="email" name="email" required /></label>
+        </p>
+        <p>
+          <button type="submit">Send</button>
+        </p>
+      </form>
+    </popup>
   </div>
 </template>
 
@@ -44,6 +71,8 @@ export default {
   data() {
     return {
       messages: [],
+      showPopup: false,
+      axiosPost: { name: "test", mail: "123" },
     };
   },
   props: {
@@ -64,6 +93,20 @@ export default {
       "INCREMENT_CART_ITEM",
       "DECREMENT_CART_ITEM",
     ]),
+    closePopup() {
+      this.showPopup = false;
+    },
+    sendForm() {
+      let form = document.querySelector("form");
+      form.submit();
+    },
+    axiosSubmit() {
+      this.$axios
+        .$post("https://electrica.netlify.app/", this.axiosPost)
+        .then((result) => {
+          console.log(result);
+        });
+    },
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index)
         .then(() => {
