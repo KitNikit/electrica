@@ -49,7 +49,7 @@
       rightButton="Отправить"
       @rightButtonAction="send"
     >
-      <form name="contact" method="POST" data-netlify="true">
+      <form name="popup_form" method="POST" data-netlify="true">
         <div>
           <input type="text" name="name" />
           <label>Имя </label>
@@ -64,7 +64,7 @@
         <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
-    <form name="contact" method="POST" data-netlify="true">
+    <form name="hidden_form" method="POST" data-netlify="true">
       <input type="hidden" name="items" v-model="cart_data" />
       <button type="submit">Send</button>
     </form>
