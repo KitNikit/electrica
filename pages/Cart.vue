@@ -64,7 +64,6 @@
     <form
       action="/catalog"
       id="test"
-      @submit="test"
       name="contact"
       method="POST"
       data-netlify="true"
@@ -116,18 +115,18 @@ export default {
       "DECREMENT_CART_ITEM",
     ]),
 
-    test(e) {
-      e.preventDefault();
-      let myForm = document.getElementById("test");
-      let formData = new FormData(myForm);
-      fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData).toString(),
-      })
-        .then(() => console.log("Form successfully submitted"))
-        .catch((error) => alert(error));
-    },
+    // test(e) {
+    //   e.preventDefault();
+    //   let myForm = document.getElementById("test");
+    //   let formData = new FormData(myForm);
+    //   fetch("/", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    //     body: new URLSearchParams(formData).toString(),
+    //   })
+    //     .then(() => console.log("Form successfully submitted"))
+    //     .catch((error) => alert(error));
+    // },
 
     closePopup() {
       this.showPopup = false;
