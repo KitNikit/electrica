@@ -82,7 +82,8 @@ export default {
       messages: [],
       showPopup: false,
       axiosPost: { name: "test", mail: "123" },
-      cart_data: [123],
+      cart_data: [],
+      test: "",
     };
   },
   // props: {
@@ -178,6 +179,7 @@ export default {
         vm.$set(item, "quantity", 1);
       }
     });
+    this.CATALOG[0].name;
   },
 };
 </script>
