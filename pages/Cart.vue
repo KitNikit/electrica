@@ -61,7 +61,13 @@
         <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
-    <form name="contact" method="POST" data-netlify="true">
+    <form
+      id="test"
+      @submit="test"
+      name="contact"
+      method="POST"
+      data-netlify="true"
+    >
       <p>
         <label>Your Name: <input type="text" name="name" /></label>
       </p>
@@ -108,11 +114,25 @@ export default {
       "INCREMENT_CART_ITEM",
       "DECREMENT_CART_ITEM",
     ]),
+
+    test(e) {
+      e.preventDefault();
+      let myForm = document.getElementById("test");
+      let formData = new FormData(myForm);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      })
+        .then(() => console.log("Form successfully submitted"))
+        .catch((error) => alert(error));
+    },
+
     closePopup() {
       this.showPopup = false;
     },
     sendForm() {
-      let form = document.querySelector(".submit_form").click();
+      document.querySelector(".submit_form").click();
     },
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index)
