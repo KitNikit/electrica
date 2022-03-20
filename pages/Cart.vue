@@ -47,19 +47,19 @@
       v-if="showPopup"
       @closePopup="closePopup"
       rightButton="Отправить"
-      @rightButtonAction="send"
+      @rightButtonAction="sendForm"
     >
       <form name="popup_form" method="POST" data-netlify="true">
         <div>
-          <input type="text" name="name" />
+          <input type="text" name="Name" />
           <label>Имя </label>
         </div>
         <div>
-          <input type="tel" name="tel" required />
+          <input type="tel" name="Telephone" required />
           <label>Телефон </label>
         </div>
         <div>
-          <input type="hidden" name="товары" v-model="cart_data" />
+          <input type="hidden" name="Product" v-model="cart_data" />
         </div>
         <input style="display: none" class="submit_form" type="submit" />
       </form>
@@ -90,8 +90,7 @@ export default {
     return {
       messages: [],
       showPopup: false,
-      axiosPost: { name: "test", mail: "123" },
-      cart_data: [],
+      cart_data: "",
     };
   },
   // props: {
@@ -129,9 +128,9 @@ export default {
     closePopup() {
       this.showPopup = false;
     },
-    // sendForm() {
-    //   document.querySelector(".submit_form").click();
-    // },
+    sendForm() {
+      document.querySelector(".submit_form").click();
+    },
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index)
         .then(() => {
@@ -182,7 +181,8 @@ export default {
   mounted() {
     let vm = this;
     this.CART.map(function (item) {
-      vm.cart_data.push(item.name);
+      // vm.cart_data.push(item.name);
+      vm.cart_data += item.name + "; ";
       if (!item.quantity) {
         vm.$set(item, "quantity", 1);
       }
