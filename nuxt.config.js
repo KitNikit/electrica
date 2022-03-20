@@ -50,10 +50,10 @@ export default {
       "nuxt-mail",
       {
         message: {
-          to: "vclan@mail.ru",
+          to: "my@mail.ru",
         },
         smtp: {
-          host: "smtp.electrica.netlify.app",
+          host: "electrica.netlify.app",
           port: 587,
         },
       },
