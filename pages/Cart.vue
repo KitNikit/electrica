@@ -190,7 +190,7 @@ export default {
     });
     let myinput = document.querySelector(".myinput");
     myinput.innerHTML =
-      '<input type="text" value="' + this.myvalue + '" id="age">';
+      '<input name="item" type="text" value="' + this.myvalue + '" id="age"/>';
   },
 };
 </script>
