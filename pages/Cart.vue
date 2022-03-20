@@ -43,8 +43,8 @@
         Отправить запрос
       </button>
     </div>
+    <!-- v-if="showPopup" -->
     <popup
-      v-if="showPopup"
       @closePopup="closePopup"
       rightButton="Отправить"
       @rightButtonAction="sendForm"
