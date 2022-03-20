@@ -64,6 +64,19 @@
         <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
+    <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contactus" />
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" />
+      </div>
+      <div>
+        <input type="email" name="email" />
+        <label for="email">Email:</label>
+      </div>
+      <div class="myinput"></div>
+      <button type="submit" value="Send message">Send</button>
+    </form>
   </div>
 </template>
 
@@ -79,6 +92,7 @@ export default {
       showPopup: false,
       axiosPost: { name: "test", mail: "123" },
       cart_data: [],
+      myvalue: "123",
     };
   },
   // props: {
@@ -174,6 +188,9 @@ export default {
         vm.$set(item, "quantity", 1);
       }
     });
+    let myinput = document.querySelector(".myinput");
+    myinput.innerHTML =
+      '<input type="text" value="' + this.myvalue + '" id="age">';
   },
 };
 </script>
