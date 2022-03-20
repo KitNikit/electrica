@@ -49,7 +49,14 @@
       rightButton="Отправить"
       @rightButtonAction="sendForm"
     >
-      <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
+      <form
+        @submit="test"
+        name="contactus"
+        method="post"
+        netlify
+        netlify-honeypot="bot-field"
+        id="test"
+      >
         <input type="hidden" name="form-name" value="contactus" />
         <div>
           <input type="text" name="Name" />
@@ -65,19 +72,6 @@
         <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
-    <!-- <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="contactus" />
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" name="name" :value="cart_data" />
-      </div>
-      <div>
-        <input type="email" name="email" />
-        <label for="email">Email:</label>
-      </div>
-      <div class="myinput"></div>
-      <button type="submit" value="Send message">Send</button>
-    </form> -->
   </div>
 </template>
 
@@ -113,18 +107,18 @@ export default {
       "DECREMENT_CART_ITEM",
     ]),
 
-    // test(e) {
-    //   e.preventDefault();
-    //   let myForm = document.getElementById("test");
-    //   let formData = new FormData(myForm);
-    //   fetch("/", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    //     body: new URLSearchParams(formData).toString(),
-    //   })
-    //     .then(() => console.log("Form successfully submitted"))
-    //     .catch((error) => alert(error));
-    // },
+    test(e) {
+      e.preventDefault();
+      let myForm = document.getElementById("test");
+      let formData = new FormData(myForm);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      })
+        .then(() => console.log("Form successfully submitted"))
+        .catch((error) => alert(error));
+    },
 
     closePopup() {
       this.showPopup = false;
