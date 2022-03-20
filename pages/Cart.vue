@@ -68,7 +68,7 @@
       <input type="hidden" name="form-name" value="contactus" />
       <div>
         <label for="name">Name:</label>
-        <input type="text" name="name" />
+        <input type="text" name="name" :value="myvalue" />
       </div>
       <div>
         <input type="email" name="email" />
@@ -190,7 +190,9 @@ export default {
     });
     let myinput = document.querySelector(".myinput");
     myinput.innerHTML =
-      '<input name="item" type="text" value="' + this.myvalue + '" id="age"/>';
+      '<input name="item" type="text" value="' +
+      this.myvalue +
+      '"/><label for="item">Item:</label>';
   },
 };
 </script>
