@@ -49,7 +49,8 @@
       rightButton="Отправить"
       @rightButtonAction="sendForm"
     >
-      <form name="popup_form" method="POST" data-netlify="true">
+      <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contactus" />
         <div>
           <input type="text" name="Name" />
           <label>Имя </label>
@@ -61,10 +62,10 @@
         <div>
           <input type="hidden" name="Product" v-model="cart_data" />
         </div>
-        <input style="display: none" class="submit_form" type="submit" />
+        <input class="submit_form" type="submit" />
       </form>
     </popup>
-    <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
+    <!-- <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="contactus" />
       <div>
         <label for="name">Name:</label>
@@ -76,7 +77,7 @@
       </div>
       <div class="myinput"></div>
       <button type="submit" value="Send message">Send</button>
-    </form>
+    </form> -->
   </div>
 </template>
 
