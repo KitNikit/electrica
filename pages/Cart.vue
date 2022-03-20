@@ -50,12 +50,11 @@
       @rightButtonAction="sendForm"
     >
       <form
-        @submit="test"
+        @submit.prevent="formFetch"
         name="contactus"
         method="post"
         netlify
         netlify-honeypot="bot-field"
-        id="test"
       >
         <input type="hidden" name="form-name" value="contactus" />
         <div>
@@ -107,17 +106,25 @@ export default {
       "DECREMENT_CART_ITEM",
     ]),
 
-    test(e) {
-      e.preventDefault();
-      let myForm = document.getElementById("test");
-      let formData = new FormData(myForm);
+    formFetch(e) {
       fetch("/", {
+        body: new FormData(e.target),
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData).toString(),
       })
-        .then(() => console.log("Form successfully submitted"))
-        .catch((error) => alert(error));
+        .then(() => (this.showPopup = false))
+        .then(() => {
+          let timeStamp = Date.now().toLocaleString();
+          this.messages.unshift({
+            name: "Запрос отправлен",
+            id: timeStamp,
+          });
+        })
+        .then(() => {
+          let vm = this;
+          setTimeout(function () {
+            vm.messages.splice(vm.messages.length - 1, 1);
+          }, 3000);
+        });
     },
 
     closePopup() {
