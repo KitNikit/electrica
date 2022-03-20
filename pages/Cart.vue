@@ -43,8 +43,8 @@
         Отправить запрос
       </button>
     </div>
-    <!-- v-if="showPopup" -->
     <popup
+      v-if="showPopup"
       @closePopup="closePopup"
       rightButton="Отправить"
       @rightButtonAction="sendForm"
@@ -62,7 +62,7 @@
         <div>
           <input type="hidden" name="Product" v-model="cart_data" />
         </div>
-        <input class="submit_form" type="submit" />
+        <input style="display: none" class="submit_form" type="submit" />
       </form>
     </popup>
     <!-- <form name="contactus" method="post" netlify netlify-honeypot="bot-field">
