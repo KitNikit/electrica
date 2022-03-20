@@ -68,7 +68,7 @@
       <input type="hidden" name="form-name" value="contactus" />
       <div>
         <label for="name">Name:</label>
-        <input type="text" name="name" :value="myvalue" />
+        <input type="text" name="name" :value="cart_data" />
       </div>
       <div>
         <input type="email" name="email" />
@@ -92,7 +92,6 @@ export default {
       showPopup: false,
       axiosPost: { name: "test", mail: "123" },
       cart_data: [],
-      myvalue: "123",
     };
   },
   // props: {
@@ -188,11 +187,6 @@ export default {
         vm.$set(item, "quantity", 1);
       }
     });
-    let myinput = document.querySelector(".myinput");
-    myinput.innerHTML =
-      '<input name="item" type="text" value="' +
-      this.myvalue +
-      '"/><label for="item">Item:</label>';
   },
 };
 </script>
