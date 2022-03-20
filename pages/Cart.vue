@@ -265,13 +265,17 @@ export default {
   align-items: center;
 }
 form input {
-  font-size: 16px;
+  font-size: 20px;
   display: block;
   width: 300px;
   border: none;
   border-bottom: 1px solid #ccc;
 }
-
+form input:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0 50px #fff !important; /* Цвет фона */
+  -webkit-text-fill-color: #999 !important; /* цвет текста */
+  color: #999 !important; /* цвет текста */
+}
 form input:focus + label {
   color: #fed700;
 }
