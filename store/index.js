@@ -8,6 +8,7 @@ import searchValue from "./states/searchValue";
 import query from "./states/query";
 import menu from "./states/menu";
 import product from "./states/product";
+import cartMail from "./states/cartMail";
 
 const allState = {
   ...catalog,
@@ -18,6 +19,7 @@ const allState = {
   ...query,
   ...menu,
   ...product,
+  ...cartMail,
 };
 
 Vue.use(Vuex);
@@ -43,15 +45,18 @@ const store = () =>
           if (!isProductExist) {
             state.allState.cart.push(product);
             localStorage.setItem("cart", JSON.stringify(state.allState.cart));
+            state.allState.cartMail.push(product.name);
           }
         } else {
           state.allState.cart.push(product);
           localStorage.setItem("cart", JSON.stringify(state.allState.cart));
+          state.allState.cartMail.push(product.name);
         }
       },
       REMOVE_FROM_CART(state, index) {
         state.allState.cart.splice(index, 1);
         localStorage.setItem("cart", JSON.stringify(state.allState.cart));
+        state.allState.cartMail.splice(index, 1);
       },
       INCREMENT(state, index) {
         state.allState.cart[index].quantity++;
@@ -63,6 +68,13 @@ const store = () =>
       },
       SET_LOCAL_CART(state) {
         state.allState.cart = JSON.parse(localStorage.getItem("cart"));
+        JSON.parse(localStorage.getItem("cart")).map(function (item) {
+          if (!state.allState.cartMail.includes(item.name)) {
+            state.allState.cartMail.push(item.name);
+          }
+        });
+
+        state.allState.cartMail;
       },
       SHOW(state, index) {
         if (state.allState.catalog[index].show === false) {
@@ -177,6 +189,9 @@ const store = () =>
       },
       PRODUCT(state) {
         return state.allState.product;
+      },
+      CART_MAIL(state) {
+        return state.allState.cartMail;
       },
     },
   });

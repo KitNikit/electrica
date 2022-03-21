@@ -66,7 +66,7 @@
           <label>Телефон </label>
         </div>
         <div>
-          <input type="hidden" name="Product" v-model="cart_data" />
+          <input type="hidden" name="Product" v-model="CART_MAIL" />
         </div>
         <input style="display: none" class="submit_form" type="submit" />
       </form>
@@ -84,7 +84,6 @@ export default {
     return {
       messages: [],
       showPopup: false,
-      cart_data: "",
     };
   },
   // props: {
@@ -168,7 +167,7 @@ export default {
     // },
   },
   computed: {
-    ...mapGetters(["CART", "CATALOG"]),
+    ...mapGetters(["CART", "CATALOG", "CART_MAIL"]),
     cartTotal() {
       let result = [];
       if (this.CART.length) {
@@ -183,16 +182,6 @@ export default {
         return 0;
       }
     },
-  },
-  mounted() {
-    let vm = this;
-    this.CART.map(function (item) {
-      // vm.cart_data.push(item.name);
-      vm.cart_data += item.name + "; ";
-      if (!item.quantity) {
-        vm.$set(item, "quantity", 1);
-      }
-    });
   },
 };
 </script>
