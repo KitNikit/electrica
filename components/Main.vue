@@ -149,6 +149,9 @@ export default {
       if (!item.show) {
         vm.$set(item, "show", false);
       }
+      if (!item.quantity) {
+        vm.$set(item, "quantity", 1);
+      }
     });
     if (!this.MENU.length) {
       this.GET_MENU();
