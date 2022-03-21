@@ -175,7 +175,17 @@ export default {
       this.GET_SEARCH_VALUE();
     },
   },
-  beforeMount() {
+  // beforeMount() {
+  //   if (!localStorage.cart) {
+  //     localStorage.setItem("cart", JSON.stringify([]));
+  //   } else if (
+  //     !this.CART.length &&
+  //     JSON.parse(localStorage.getItem("cart")).length
+  //   ) {
+  //     this.GET_LOCAL_CART();
+  //   }
+  // },
+  mounted() {
     if (!localStorage.cart) {
       localStorage.setItem("cart", JSON.stringify([]));
     } else if (
@@ -184,8 +194,6 @@ export default {
     ) {
       this.GET_LOCAL_CART();
     }
-  },
-  mounted() {
     document.addEventListener("click", function (item) {
       let element = document.querySelector(".header_center");
       let burger = document.querySelector(".burger_menu");
