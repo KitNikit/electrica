@@ -150,16 +150,14 @@ export default {
         });
     },
     incrementItem(index) {
-      this.INCREMENT_CART_ITEM(index);
-      // .then(() => {
-      //   localStorage.setItem("cart", JSON.stringify(this.CART));
-      // });
+      this.INCREMENT_CART_ITEM(index).then(() => {
+        localStorage.setItem("cart", JSON.stringify(this.CART));
+      });
     },
     decrementItem(index) {
-      this.DECREMENT_CART_ITEM(index);
-      // .then(() => {
-      //   localStorage.setItem("cart", JSON.stringify(this.CART));
-      // });
+      this.DECREMENT_CART_ITEM(index).then(() => {
+        localStorage.setItem("cart", JSON.stringify(this.CART));
+      });
     },
     // send() {
     //   this.$axios.$post("/mail/send", {
@@ -277,11 +275,11 @@ form input {
   border: none;
   border-bottom: 1px solid #ccc;
 }
-/* form input:-webkit-autofill {
+form input:-webkit-autofill {
   -webkit-box-shadow: inset 0 0 0 50px #fff !important;
   -webkit-text-fill-color: #999 !important;
   color: #999 !important;
-} */
+}
 form input:focus + label {
   color: #fed700;
 }
