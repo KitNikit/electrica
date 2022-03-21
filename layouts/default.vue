@@ -142,7 +142,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_SEARCH_VALUE", "GET_QUERY"]),
+    ...mapActions(["GET_SEARCH_VALUE", "GET_QUERY", "GET_LOCAL_CART"]),
     toggleMenu() {
       let element = document.querySelector(".header_center");
       let burger = document.querySelector(".burger_menu");
@@ -175,7 +175,13 @@ export default {
       this.GET_SEARCH_VALUE();
     },
   },
+  beforeMount() {
+    if (!this.CART.length && JSON.parse(localStorage.getItem("cart")).length) {
+      this.GET_LOCAL_CART();
+    }
+  },
   mounted() {
+    // this.cartLength = JSON.parse(localStorage.getItem("cart")).length;
     document.addEventListener("click", function (item) {
       let element = document.querySelector(".header_center");
       let burger = document.querySelector(".burger_menu");

@@ -150,10 +150,14 @@ export default {
         });
     },
     incrementItem(index) {
-      this.INCREMENT_CART_ITEM(index);
+      this.INCREMENT_CART_ITEM(index).then(() => {
+        localStorage.setItem("cart", JSON.stringify(this.CART));
+      });
     },
     decrementItem(index) {
-      this.DECREMENT_CART_ITEM(index);
+      this.DECREMENT_CART_ITEM(index).then(() => {
+        localStorage.setItem("cart", JSON.stringify(this.CART));
+      });
     },
     send() {
       this.$axios.$post("/mail/send", {

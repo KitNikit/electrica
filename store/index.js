@@ -42,13 +42,16 @@ const store = () =>
           });
           if (!isProductExist) {
             state.allState.cart.push(product);
+            localStorage.setItem("cart", JSON.stringify(state.allState.cart));
           }
         } else {
           state.allState.cart.push(product);
+          localStorage.setItem("cart", JSON.stringify(state.allState.cart));
         }
       },
       REMOVE_FROM_CART(state, index) {
         state.allState.cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(state.allState.cart));
       },
       INCREMENT(state, index) {
         state.allState.cart[index].quantity++;
@@ -57,6 +60,9 @@ const store = () =>
         if (state.allState.cart[index].quantity > 1) {
           state.allState.cart[index].quantity--;
         }
+      },
+      SET_LOCAL_CART(state) {
+        state.allState.cart = JSON.parse(localStorage.getItem("cart"));
       },
       SHOW(state, index) {
         if (state.allState.catalog[index].show === false) {
@@ -118,6 +124,9 @@ const store = () =>
       },
       DECREMENT_CART_ITEM({ commit }, index) {
         commit("DECREMENT", index);
+      },
+      GET_LOCAL_CART({ commit }) {
+        commit("SET_LOCAL_CART");
       },
       SHOW_POPUP({ commit }, index) {
         commit("SHOW", index);

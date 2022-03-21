@@ -17,20 +17,24 @@
         PAGE {{ page }}
       </div>
     </div>
+    <!-- <div>{{ localStorage.test }}</div> -->
+    <button @click="addLocalStore">LocalStore</button>
   </div>
 </template>
 
 <script>
-// import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       inPage: 3,
       pageNumber: 1,
+      cartStorage: "",
     };
   },
   computed: {
+    ...mapGetters(["CART", "CATALOG"]),
     pages() {
       return Math.ceil(this.data.length / this.inPage);
     },
@@ -44,6 +48,15 @@ export default {
     // ...mapActions(["GET_FROM_API"]),
     pageClick(page) {
       this.pageNumber = page;
+    },
+    addLocalStore() {
+      localStorage.test = 2;
+      console.log(localStorage.test);
+      // localStorage.setItem("cart", JSON.stringify(this.CATALOG[0]));
+      // this.cartStorage = JSON.parse(localStorage.getItem("cart"));
+      // console.log(this.cartStorage);
+      // localStorage.removeItem("name");
+      // localStorage.clear();
     },
   },
   //   mounted() {
