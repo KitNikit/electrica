@@ -176,12 +176,16 @@ export default {
     },
   },
   beforeMount() {
-    if (!this.CART.length && JSON.parse(localStorage.getItem("cart")).length) {
+    if (!localStorage.cart) {
+      localStorage.setItem("cart", JSON.stringify([]));
+    } else if (
+      !this.CART.length &&
+      JSON.parse(localStorage.getItem("cart")).length
+    ) {
       this.GET_LOCAL_CART();
     }
   },
   mounted() {
-    // this.cartLength = JSON.parse(localStorage.getItem("cart")).length;
     document.addEventListener("click", function (item) {
       let element = document.querySelector(".header_center");
       let burger = document.querySelector(".burger_menu");
