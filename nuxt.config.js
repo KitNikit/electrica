@@ -55,7 +55,7 @@ export default {
       {
         // process.env.
         config: {
-          apiKey: "AIzaSyC-N5MqITRXSHveoiD_PMUKFjOG28SR9zI",
+          apiKey: process.env.API_FIREBASE_KEY,
           authDomain: "elecrica1.firebaseapp.com",
           projectId: "elecrica1",
           storageBucket: "elecrica1.appspot.com",
