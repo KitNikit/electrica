@@ -53,14 +53,15 @@ export default {
     [
       "@nuxtjs/firebase",
       {
+        // process.env.
         config: {
-          apiKey: process.env.apiKey,
-          authDomain: process.env.authDomain,
+          apiKey: apiKey,
+          authDomain: authDomain,
           projectId: "elecrica1",
           storageBucket: "elecrica1.appspot.com",
-          messagingSenderId: process.env.messagingSenderId,
-          appId: process.env.appId,
-          databaseURL: process.env.databaseURL,
+          messagingSenderId: messagingSenderId,
+          appId: appId,
+          databaseURL: databaseURL,
         },
         services: {
           database: true,
