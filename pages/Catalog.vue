@@ -1,6 +1,20 @@
 <template>
   <div class="catalog">
     <notification :messages="messages"> </notification>
+    <popup
+      v-if="showPopup"
+      @closePopup="closePopup(index)"
+      rightButton="В корзину"
+      @rightButtonAction="addToCart(POPUP_ITEM)"
+    >
+      <img :src="`${POPUP_ITEM.src}`" />
+      <div class="cat_item_title">
+        {{ POPUP_ITEM.name }}
+      </div>
+      <!-- <div class="cat_item_price">
+        {{ POPUP_ITEM.price | toFix | spacePrice }}
+      </div> -->
+    </popup>
     <div class="catalog_menu">
       <div class="menu_show">
         <div class="menu_show_btn" @click="showMenu">
@@ -29,24 +43,10 @@
           v-for="(item, index) in paginatedItems"
           :key="item.name"
         >
-          <popup
-            v-if="item.show"
-            @closePopup="closePopup(index)"
-            rightButton="В корзину"
-            @rightButtonAction="addToCart(item)"
-          >
-            <img :src="`${item.src}`" />
-            <!-- <div class="cat_item_title">
-              {{ item.name }}
-            </div>
-            <div class="cat_item_price">
-              {{ item.price | toFix | spacePrice }}
-            </div> -->
-          </popup>
           <div class="cat_item_title" @click.prevent="openProduct(item)">
             {{ item.name }}
           </div>
-          <div class="cat_item_img" @click.prevent="openPopup(index)">
+          <div class="cat_item_img" @click.prevent="openPopup(item)">
             <img :src="`${item.src}`" />
           </div>
           <div class="cat_item_price">
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 import toFix from "../filters/toFix";
 import spacePrice from "../filters/spacePrice";
 import notification from "../components/notification.vue";
@@ -86,8 +86,9 @@ export default {
     return {
       products: [],
       messages: [],
-      inPage: 6,
+      inPage: 12,
       pageNumber: 1,
+      showPopup: false,
     };
   },
   filters: {
@@ -95,21 +96,22 @@ export default {
     spacePrice,
   },
   methods: {
-    ...mapActions([
-      "ADD_TO_CART",
-      "SHOW_POPUP",
-      "CLOSE_POPUP",
-      "GET_MENU",
-      "GET_QUERY",
-      "GET_SEARCH_VALUE",
-      "GET_PRODUCT",
-    ]),
+    // ...mapActions([
+    //   "ADD_TO_CART",
+    //   "SHOW_POPUP",
+    //   "CLOSE_POPUP",
+    //   "GET_MENU",
+    //   "GET_QUERY",
+    //   "GET_SEARCH_VALUE",
+    //   "GET_PRODUCT",
+    // ]),
     showMenu() {
       let menu = document.querySelector(".catalog_menu");
       menu.classList.toggle("active");
     },
     addToCart(item) {
-      this.ADD_TO_CART(item)
+      this.$store
+        .dispatch("ADD_TO_CART", item)
         .then(() => {
           let timeStamp = Date.now().toLocaleString();
           this.messages.unshift({
@@ -124,30 +126,39 @@ export default {
           }, 3000);
         });
     },
-    openPopup(index) {
-      if (this.products[index].show === false) {
-        this.products[index].show = true;
+    openPopup(item) {
+      this.$store.dispatch("GET_SHOW_POPUP_ITEM", item);
+      if (this.showPopup === false) {
+        this.showPopup = true;
       }
+      // this.$store.dispatch("SHOW_POPUP", index);
+      // if (this.products[index].show === false) {
+      //   this.products[index].show = true;
+      // }
     },
     closePopup(index) {
-      if (this.products[index].show === true) {
-        this.products[index].show = false;
+      if (this.showPopup === true) {
+        this.showPopup = false;
       }
+      // this.$store.dispatch("CLOSE_POPUP", index);
+      // if (this.products[index].show === true) {
+      //   this.products[index].show = false;
+      // }
       // this.CLOSE_POPUP(index);
     },
     sortProducts(value) {
       this.products = this.CATALOG.filter(function (item) {
         return item.name.toLowerCase().includes(value.toLowerCase());
       });
-      this.setShowProp();
+      // this.setShowProp();
     },
     categorySort(value) {
       if (this.QUERY == value) {
-        this.GET_QUERY().then(() => {
-          this.GET_QUERY(value);
+        this.$store.dispatch("GET_QUERY").then(() => {
+          this.$store.dispatch("GET_QUERY", value);
         });
       } else {
-        this.GET_QUERY(value);
+        this.$store.dispatch("GET_QUERY", value);
       }
       this.$router.push("?category=" + value);
     },
@@ -156,28 +167,28 @@ export default {
       this.products = this.CATALOG.filter(function (item) {
         return item.category == vm.QUERY;
       });
-      this.setShowProp();
+      // this.setShowProp();
     },
     sortRoute() {
       let vm = this;
       this.products = this.CATALOG.filter(function (item) {
         return item.category == vm.$route.query.category;
       });
-      this.setShowProp();
+      // this.setShowProp();
     },
-    setShowProp() {
-      let vm = this;
-      this.products.map(function (item) {
-        if (!item.show) {
-          vm.$set(item, "show", false);
-        }
-        if (!item.quantity) {
-          vm.$set(item, "quantity", 1);
-        }
-      });
-    },
+    // setShowProp() {
+    //   let vm = this;
+    //   this.products.map(function (item) {
+    //     if (!item.show) {
+    //       vm.$set(item, "show", false);
+    //     }
+    //     if (!item.quantity) {
+    //       vm.$set(item, "quantity", 1);
+    //     }
+    //   });
+    // },
     openProduct(item) {
-      this.GET_PRODUCT(item);
+      this.$store.dispatch("GET_PRODUCT", item);
       this.$router.push({ path: "/product", query: { name: item.name } });
     },
     pageClick(page) {
@@ -185,7 +196,22 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["CATALOG", "SEACH_VALUE", "QUERY", "MENU"]),
+    // ...mapGetters(["CATALOG", "SEACH_VALUE", "QUERY", "MENU"]),
+    POPUP_ITEM() {
+      return this.$store.getters.POPUP_ITEM;
+    },
+    CATALOG() {
+      return this.$store.getters.CATALOG;
+    },
+    SEACH_VALUE() {
+      return this.$store.getters.SEACH_VALUE;
+    },
+    QUERY() {
+      return this.$store.getters.QUERY;
+    },
+    MENU() {
+      return this.$store.getters.MENU;
+    },
     pages() {
       return Math.ceil(this.products.length / this.inPage);
     },
@@ -212,6 +238,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch("GET_SHOW_AND_QANTITY");
     if (this.SEACH_VALUE) {
       this.sortProducts(this.SEACH_VALUE);
     } else if (this.QUERY) {
@@ -220,10 +247,10 @@ export default {
       this.sortRoute();
     } else {
       this.products = this.CATALOG;
-      this.setShowProp();
+      // this.setShowProp();
     }
     if (!this.MENU.length) {
-      this.GET_MENU();
+      this.$store.dispatch("GET_MENU");
     }
   },
 };

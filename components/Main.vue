@@ -32,31 +32,31 @@
     </div>
     <div class="categories_container">
       <notification :messages="messages"> </notification>
+      <popup
+        v-if="showPopup"
+        @closePopup="closePopup(index)"
+        rightButton="В корзину"
+        @rightButtonAction="addToCart(POPUP_ITEM)"
+      >
+        <img :src="`${POPUP_ITEM.src}`" />
+        <div class="cat_item_title">
+          {{ POPUP_ITEM.name }}
+        </div>
+        <!-- <div class="price_number">
+              {{ POPUP_ITEM.price | toFix | spacePrice }}
+            </div> -->
+      </popup>
       <div class="categories_title two">Товары недели</div>
       <div class="categories_items">
         <div
           class="categories_item"
-          v-for="(item, index) in WEEK"
+          v-for="(item, index) in firebase_data_week"
           :key="item.name"
         >
-          <popup
-            v-if="item.show"
-            @closePopup="closePopup(index)"
-            rightButton="В корзину"
-            @rightButtonAction="addToCart(item)"
-          >
-            <img :src="`${item.src}`" />
-            <!-- <div class="cat_item_title">
-              {{ item.name }}
-            </div>
-            <div class="price_number">
-              {{ item.price | toFix | spacePrice }}
-            </div> -->
-          </popup>
-          <div class="cat_item_title" @click.prevent="openPopup(index)">
+          <div class="cat_item_title" @click.prevent="openPopup(item)">
             {{ item.name }}
           </div>
-          <div class="cat_item_img" @click.prevent="openPopup(index)">
+          <div class="cat_item_img" @click.prevent="openPopup(item)">
             <img :src="`${item.src}`" />
           </div>
           <div class="cat_item_price">
@@ -88,13 +88,15 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 import toFix from "../filters/toFix";
 import spacePrice from "../filters/spacePrice";
 export default {
   data() {
     return {
       messages: [],
+      showPopup: false,
+      firebase_data_week: [],
     };
   },
   filters: {
@@ -102,19 +104,29 @@ export default {
     spacePrice,
   },
   methods: {
-    ...mapActions([
-      "ADD_TO_CART",
-      "SHOW_POPUP_WEEK",
-      "CLOSE_POPUP_WEEK",
-      "GET_QUERY",
-      "GET_MENU",
-    ]),
+    async readFromRealtimeDb() {
+      const messageRef = this.$fire.database.ref("week");
+      try {
+        const snapshot = await messageRef.once("value");
+        this.firebase_data_week = snapshot.val();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // ...mapActions([
+    //   "ADD_TO_CART",
+    //   "SHOW_POPUP_WEEK",
+    //   "CLOSE_POPUP_WEEK",
+    //   "GET_QUERY",
+    //   "GET_MENU",
+    // ]),
     // toggleMenu: function () {
     //   let element = document.querySelector(".catalog_block");
     //   element.classList.toggle("active");
     // },
     addToCart(item) {
-      this.ADD_TO_CART(item)
+      this.$store
+        .dispatch("ADD_TO_CART", item)
         .then(() => {
           let timeStamp = Date.now().toLocaleString();
           this.messages.unshift({
@@ -129,33 +141,59 @@ export default {
           }, 3000);
         });
     },
-    openPopup(index) {
-      this.SHOW_POPUP_WEEK(index);
+    openPopup(item) {
+      this.$store.dispatch("GET_SHOW_POPUP_ITEM", item);
+      if (this.showPopup === false) {
+        this.showPopup = true;
+      }
+      // if (this.firebase_data_week[index].show === false) {
+      //   this.firebase_data_week[index].show = true;
+      // }
+      // this.$store.dispatch("SHOW_POPUP_WEEK", index);
     },
     closePopup(index) {
-      this.CLOSE_POPUP_WEEK(index);
+      if (this.showPopup === true) {
+        this.showPopup = false;
+      }
+      // if (this.firebase_data_week[index].show === true) {
+      //   this.firebase_data_week[index].show = false;
+      // }
+      // this.$store.dispatch("CLOSE_POPUP_WEEK", index);
     },
     categoryLink(value) {
-      this.GET_QUERY(value);
+      this.$store.dispatch("GET_QUERY", value);
       this.$router.push("/catalog?category=" + value);
     },
   },
   computed: {
-    ...mapGetters(["WEEK", "POPULAR", "MENU"]),
+    // ...mapGetters(["WEEK", "POPULAR", "MENU"]),
+    POPUP_ITEM() {
+      return this.$store.getters.POPUP_ITEM;
+    },
+    WEEK() {
+      return this.$store.getters.WEEK;
+    },
+    POPULAR() {
+      return this.$store.getters.POPULAR;
+    },
+    MENU() {
+      return this.$store.getters.MENU;
+    },
   },
   mounted() {
-    let vm = this;
-    this.WEEK.map(function (item) {
-      if (!item.show) {
-        vm.$set(item, "show", false);
-      }
-      if (!item.quantity) {
-        vm.$set(item, "quantity", 1);
-      }
-    });
+    // let vm = this;
+    // this.WEEK.map(function (item) {
+    //   if (!item.show) {
+    //     vm.$set(item, "show", false);
+    //   }
+    //   if (!item.quantity) {
+    //     vm.$set(item, "quantity", 1);
+    //   }
+    // });
     if (!this.MENU.length) {
-      this.GET_MENU();
+      this.$store.dispatch("GET_MENU");
     }
+    this.readFromRealtimeDb();
   },
 };
 </script>

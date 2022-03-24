@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 import toFix from "../filters/toFix";
 import spacePrice from "../filters/spacePrice";
 
@@ -99,11 +99,11 @@ export default {
     spacePrice,
   },
   methods: {
-    ...mapActions([
-      "DELETE_FROM_CART",
-      "INCREMENT_CART_ITEM",
-      "DECREMENT_CART_ITEM",
-    ]),
+    // ...mapActions([
+    //   "DELETE_FROM_CART",
+    //   "INCREMENT_CART_ITEM",
+    //   "DECREMENT_CART_ITEM",
+    // ]),
 
     formFetch(e) {
       fetch("/", {
@@ -133,7 +133,8 @@ export default {
       document.querySelector(".submit_form").click();
     },
     deleteFromCart(index) {
-      this.DELETE_FROM_CART(index)
+      this.$store
+        .dispatch("DELETE_FROM_CART", index)
         .then(() => {
           let timeStamp = Date.now().toLocaleString();
           this.messages.unshift({
@@ -149,12 +150,12 @@ export default {
         });
     },
     incrementItem(index) {
-      this.INCREMENT_CART_ITEM(index).then(() => {
+      this.$store.dispatch("INCREMENT_CART_ITEM", index).then(() => {
         localStorage.setItem("cart", JSON.stringify(this.CART));
       });
     },
     decrementItem(index) {
-      this.DECREMENT_CART_ITEM(index).then(() => {
+      this.$store.dispatch("DECREMENT_CART_ITEM", index).then(() => {
         localStorage.setItem("cart", JSON.stringify(this.CART));
       });
     },
@@ -167,7 +168,16 @@ export default {
     // },
   },
   computed: {
-    ...mapGetters(["CART", "CATALOG", "CART_MAIL"]),
+    // ...mapGetters(["CART", "CATALOG", "CART_MAIL"]),
+    CART() {
+      return this.$store.getters.CART;
+    },
+    CATALOG() {
+      return this.$store.getters.CATALOG;
+    },
+    CART_MAIL() {
+      return this.$store.getters.CART_MAIL;
+    },
     cartTotal() {
       let result = [];
       if (this.CART.length) {

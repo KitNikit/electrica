@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/firebase": "^8.2.2",
     "bootstrap": "^4.6.1",
     "bootstrap-icons-vue": "^0.8.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.21.1",
+    "firebase": "^9.6.9",
     "jquery": "^3.6.0",
-    "nuxt": "^2.15.7",
+    "nuxt": "^2.13.3",
     "nuxt-mail": "^3.0.23",
     "nuxt-material-design-icons": "^1.0.4",
     "popper.js": "^1.16.1"

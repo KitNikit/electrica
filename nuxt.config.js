@@ -1,3 +1,4 @@
+require("dotenv").config();
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -31,7 +32,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    // { src: "~/plugins/firebase", ssr: false }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -46,18 +49,35 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     "nuxt-material-design-icons",
+    "@nuxtjs/dotenv",
     [
-      "nuxt-mail",
+      "@nuxtjs/firebase",
       {
-        message: {
-          to: "my@mail.ru",
+        config: {
+          apiKey: process.env.apiKey,
+          authDomain: process.env.authDomain,
+          projectId: "elecrica1",
+          storageBucket: "elecrica1.appspot.com",
+          messagingSenderId: process.env.messagingSenderId,
+          appId: process.env.appId,
+          databaseURL: process.env.databaseURL,
         },
-        smtp: {
-          host: "electrica.netlify.app",
-          port: 587,
+        services: {
+          database: true,
+          auth: true, // Just as example. Can be any other service.
         },
       },
     ],
+    // ["nuxt-mail",
+    // {
+    //   message: {
+    //     to: "my@mail.ru",
+    //   },
+    //   smtp: {
+    //     host: "electrica.netlify.app",
+    //     port: 587,
+    //   },
+    // }],
   ],
   bootstrapVue: {
     icons: true,
@@ -68,4 +88,5 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  // vendor: ["firebase"],
 };

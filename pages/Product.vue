@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 import toFix from "../filters/toFix";
 import spacePrice from "../filters/spacePrice";
 export default {
@@ -31,13 +31,19 @@ export default {
     spacePrice,
   },
   computed: {
-    ...mapGetters(["PRODUCT", "CATALOG"]),
+    // ...mapGetters(["PRODUCT", "CATALOG"]),
+    CATALOG() {
+      return this.$store.getters.CATALOG;
+    },
+    PRODUCT() {
+      return this.$store.getters.PRODUCT;
+    },
   },
   methods: {
-    ...mapActions(["ADD_TO_CART"]),
+    // ...mapActions(["ADD_TO_CART"]),
     addToCart(product) {
-      console.log(product[0]);
-      this.ADD_TO_CART(product[0])
+      this.$store
+        .dispatch("ADD_TO_CART", product[0])
         .then(() => {
           let timeStamp = Date.now().toLocaleString();
           this.messages.unshift({

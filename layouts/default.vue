@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -142,7 +142,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["GET_SEARCH_VALUE", "GET_QUERY", "GET_LOCAL_CART"]),
+    // ...mapActions(["GET_SEARCH_VALUE", "GET_QUERY", "GET_LOCAL_CART"]),
     toggleMenu() {
       let element = document.querySelector(".header_center");
       let burger = document.querySelector(".burger_menu");
@@ -151,20 +151,29 @@ export default {
     },
     search(value) {
       if (value) {
-        this.GET_SEARCH_VALUE(value);
-        this.$router.push("/catalog");
+        this.$store.dispatch("GET_SEARCH_VALUE", value);
+        // this.$router.push("/catalog");
       } else {
-        this.GET_SEARCH_VALUE();
+        this.$store.dispatch("GET_SEARCH_VALUE");
       }
     },
     clearQuery() {
-      this.GET_QUERY();
+      this.$store.dispatch("GET_QUERY");
       this.searchValue = "";
-      this.GET_SEARCH_VALUE();
+      this.$store.dispatch("GET_SEARCH_VALUE");
     },
   },
   computed: {
-    ...mapGetters(["CART", "SEACH_VALUE", "QUERY"]),
+    // ...mapGetters(["CART", "SEACH_VALUE", "QUERY"]),
+    CART() {
+      return this.$store.getters.CART;
+    },
+    SEACH_VALUE() {
+      return this.$store.getters.SEACH_VALUE;
+    },
+    QUERY() {
+      return this.$store.getters.QUERY;
+    },
   },
   watch: {
     // SEACH_VALUE() {
@@ -172,7 +181,7 @@ export default {
     // },
     QUERY() {
       this.searchValue = "";
-      this.GET_SEARCH_VALUE();
+      this.$store.dispatch("GET_SEARCH_VALUE");
     },
   },
   // beforeMount() {
@@ -192,7 +201,7 @@ export default {
       !this.CART.length &&
       JSON.parse(localStorage.getItem("cart")).length
     ) {
-      this.GET_LOCAL_CART();
+      this.$store.dispatch("GET_LOCAL_CART");
     }
     document.addEventListener("click", function (item) {
       let element = document.querySelector(".header_center");
