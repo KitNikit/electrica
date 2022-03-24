@@ -152,7 +152,7 @@ export default {
     search(value) {
       if (value) {
         this.$store.dispatch("GET_SEARCH_VALUE", value);
-        // this.$router.push("/catalog");
+        this.$router.push("/catalog");
       } else {
         this.$store.dispatch("GET_SEARCH_VALUE");
       }

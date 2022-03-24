@@ -53,7 +53,6 @@ export default {
     [
       "@nuxtjs/firebase",
       {
-        // process.env.
         config: {
           apiKey: process.env.API_FIREBASE_KEY,
           authDomain: "elecrica1.firebaseapp.com",
