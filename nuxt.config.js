@@ -55,13 +55,13 @@ export default {
       {
         // process.env.
         config: {
-          apiKey: apiKey,
-          authDomain: authDomain,
+          apiKey: netlifyapiKey,
+          authDomain: netlifyauthDomain,
           projectId: "elecrica1",
           storageBucket: "elecrica1.appspot.com",
-          messagingSenderId: messagingSenderId,
-          appId: appId,
-          databaseURL: databaseURL,
+          messagingSenderId: netlifymessagingSenderId,
+          appId: netlifyappId,
+          databaseURL: netlifydatabaseURL,
         },
         services: {
           database: true,
