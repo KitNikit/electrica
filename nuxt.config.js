@@ -55,13 +55,14 @@ export default {
       {
         // process.env.
         config: {
-          apiKey: netlifyapiKey,
-          authDomain: netlifyauthDomain,
+          apiKey: "AIzaSyC-N5MqITRXSHveoiD_PMUKFjOG28SR9zI",
+          authDomain: "elecrica1.firebaseapp.com",
           projectId: "elecrica1",
           storageBucket: "elecrica1.appspot.com",
-          messagingSenderId: netlifymessagingSenderId,
-          appId: netlifyappId,
-          databaseURL: netlifydatabaseURL,
+          messagingSenderId: "751558085358",
+          appId: "1:751558085358:web:5cfa4ae330402e8c9281ff",
+          databaseURL:
+            "https://elecrica1-default-rtdb.europe-west1.firebasedatabase.app",
         },
         services: {
           database: true,
