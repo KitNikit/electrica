@@ -47,7 +47,14 @@
             </div> -->
       </popup>
       <div class="categories_title two">Товары недели</div>
-      <div class="categories_items">
+      <div class="loader_spinner" v-if="loading">
+        <b-spinner
+          style="width: 3rem; height: 3rem"
+          label="Large Spinner"
+          variant="warning"
+        ></b-spinner>
+      </div>
+      <div v-else class="categories_items">
         <div
           class="categories_item"
           v-for="(item, index) in firebase_data_week"
@@ -97,6 +104,7 @@ export default {
       messages: [],
       showPopup: false,
       firebase_data_week: [],
+      loading: true,
     };
   },
   filters: {
@@ -109,6 +117,7 @@ export default {
       try {
         const snapshot = await messageRef.once("value");
         this.firebase_data_week = snapshot.val();
+        this.loading = false;
       } catch (e) {
         console.log(e);
       }
@@ -199,6 +208,9 @@ export default {
 </script>
 
 <style>
+.loader_spinner {
+  margin: 80px auto 0;
+}
 .img {
   height: 450px;
 }
